@@ -16,14 +16,17 @@ Control your PC's power button remotely using an ESP32, a relay module, and a we
 
 ## Hardware Requirements
 
-| Component              | Quantity |
-|------------------------|----------|
-| ESP32 Dev Board        | 1         |
-| 5V Relay Module        | 1        |
-| Push Button (normally open) | 1   |
-| LED + 220Ω resistor    | 1 (for status) |
-| Jumper Wires + Breadboard | As needed |
-| Power Adapter (5V micro-USB or USB-C) | 1 |
+| Component                      | Quantity        |
+|-------------------------------|-----------------|
+| ESP32 Dev Board               | 1               |
+| 5V Relay Module               | 1               |
+| Push Button (normally open)   | 1               |
+| LED + 220Ω Resistor           | 1 (for status)  |
+| Jumper Wires + Breadboard     | As needed       |
+| Power Adapter (5V micro-USB or USB-C) | 1        |
+
+> ⚠️ **Note:** These are the minimum requirements to run the system.  
+> You are **free to customize or expand** the hardware setup as long as you understand what you're doing.
 
 ---
 
