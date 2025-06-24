@@ -1,6 +1,25 @@
-# ESP32 Smart PC Power Controller
+## ESP32 Smart PC Power Controller
 
-Control your PC's power button remotely using an ESP32, a relay module, and a web interface — perfect for remote setups, headless PCs, or DIY smart home integration.
+Control your PC's power button remotely using an ESP32, a relay module, and a web interface — ideal for headless setups, remote access, or smart home integration.
+
+---
+
+### Why I Made This
+
+I created this project because I wanted a way to **turn my PC on and off using the ESP32**, both **locally** and **over the internet**. While local control was straightforward, **remote control via the internet** presented challenges — especially due to **CGNAT (Carrier-Grade NAT)** and the lack of a public IP.
+
+There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a PC on the local network. If you only need **local access**, I recommend using that instead — it's much simpler to set up.  
+🔍 [GitHub Search: Wake-on-LAN Projects](https://github.com/search?q=wake+on+lan)
+
+However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
+
+My goal was to build a system that could simulate pressing the PC power button using a relay, with commands sent through a web interface — even from anywhere in the world.
+
+> 🔧 **Note:** For full remote access over the internet, additional steps are required such as:
+> - Using an always-on device (like a **Raspberry Pi**, another **ESP32**, or a home server)
+> - Setting up tunneling tools like **Tailscale**, **ZeroTier**, or **Ngrok**
+
+This repository focuses on developing the **core system** — the ESP32-based power control logic. If you're interested in the **internet-access setup**, I got a step-by-step tutorial separately to help you get started with secure remote access to your ESP32 controller below.
 
 ---
 
