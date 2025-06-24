@@ -185,3 +185,89 @@ Please make sure you have the following prepared before flashing the project to 
    Power the relay with 5V, and avoid overloading the ESP32 by powering high-current devices directly.
 
 ---
+
+## Installation Process 
+
+> ⚠️ **Note:** This installation guide is written for **Windows users**.  
+> If you're using **macOS** or **Linux**, the general steps are the same, but:
+> - You’ll need to install USB drivers manually (check your ESP32 chip model).
+> - File paths and menu locations may vary slightly.
+> - Arduino IDE and LittleFS still work across all platforms.
+>
+> 📎 Refer to your OS-specific instructions or community tutorials if needed.
+
+---
+
+To begin working with your ESP32 hardware, follow these installation steps:
+
+### 1. Install Arduino IDE
+Download and install the latest version of the Arduino IDE from:  
+🔗 https://www.arduino.cc/en/software
+
+### 2. Install ESP32 Board Support
+- Open Arduino IDE.
+- Go to **File > Preferences**.
+- In the **"Additional Board Manager URLs"**, paste this:("https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json")
+- Click **OK**, then go to **Tools > Board > Boards Manager**.
+- Search for **ESP32** and click **Install** on the package by **Espressif Systems**.
+
+### 3. Install USB Drivers (CH340 / CP2102)
+Depending on your ESP32 board:
+- [CH340 Driver (Windows)](https://sparks.gogo.co.nz/ch340.html)
+- [CP2102 Driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
+
+Install the correct driver so your computer can detect the ESP32 over USB.
+
+### 4. Install LittleFS Uploader
+We use LittleFS to upload web interface files to the ESP32.
+
+- Visit the repo: [arduino-littlefs-upload](https://github.com/earlephilhower/arduino-littlefs-upload)
+- Follow the instructions to install the `LittleFS Uploader` tool.
+- After installing, restart Arduino IDE.
+- You should now see **"ESP32 Sketch Data Upload"** under the **Tools** menu.
+
+### 5. Set the Correct Board and Port
+- Go to **Tools > Board**, and select your ESP32 model (e.g., **ESP32 Dev Module**).
+- Go to **Tools > Port**, and select the COM port assigned to your ESP32.
+- Also set:
+- **Flash Size**: 4MB (or match your board)
+- **Partition Scheme**: "Default 4MB with spiffs (1.2MB APP/1.5MB SPIFFS)" (or similar)
+
+---
+
+## 📤 Uploading the Code
+
+You can view or download the main sketch file here:  
+🔗 [sketch_esp32.ino](https://github.com/fnskye/ESP32PCRemote/blob/main/sketch_esp32.ino)
+
+1. Open the `.ino` file in Arduino IDE.
+2. Connect your ESP32 to your PC using a **data-capable USB cable**.
+3. Confirm:
+   - Correct board is selected under **Tools > Board**
+   - Correct port is selected under **Tools > Port**
+4. Click the **Upload** button (checkmark icon).
+5. Wait for the "Done Uploading" message.
+
+> ✅ If you see "Connecting....____", hold the **BOOT** button on the ESP32 until upload starts (for some boards).
+
+---
+
+## 🌐 Uploading Web Files (LittleFS)
+
+Your ESP32 will serve the web interface from internal storage using **LittleFS**.
+
+1. Create a folder named `/data` in the same directory as your `.ino` file.
+2. Place your web files (HTML, JS, CSS) inside `/data`.
+3. Go to **Tools > ESP32 Sketch Data Upload**.
+4. Wait for upload to complete. It should say something like: [SPIFFS] upload : 100% complete
+
+
+> ⚠️ If you don’t see this option, double-check your LittleFS tool installation.
+
+---
+
+## 🌍 Accessing the Web Interface
+
+1. Open **Serial Monitor** from Arduino IDE (**Tools > Serial Monitor**) and set baud rate to **115200**.
+2. After boot, the ESP32 will attempt to connect to Wi-Fi and print the **local IP address**, like:
+
