@@ -235,7 +235,7 @@ We use LittleFS to upload web interface files to the ESP32.
 
 ---
 
-## 📤 Uploading the Code
+## Uploading the Code
 
 You can view or download the main sketch file here:  
 🔗 [sketch_esp32.ino](https://github.com/fnskye/ESP32PCRemote/blob/main/sketch_esp32.ino)
@@ -248,11 +248,11 @@ You can view or download the main sketch file here:
 4. Click the **Upload** button (checkmark icon).
 5. Wait for the "Done Uploading" message.
 
-> ✅ If you see "Connecting....____", hold the **BOOT** button on the ESP32 until upload starts (for some boards).
+> If you see "Connecting....", hold the **BOOT** button on the ESP32 until upload starts (for some boards).
 
 ---
 
-## 🌐 Uploading Web Files (LittleFS)
+## Uploading Web Files (LittleFS)
 
 Your ESP32 will serve the web interface from internal storage using **LittleFS**.
 
@@ -262,11 +262,11 @@ Your ESP32 will serve the web interface from internal storage using **LittleFS**
 4. Wait for upload to complete. It should say something like: [SPIFFS] upload : 100% complete
 
 
-> ⚠️ If you don’t see this option, double-check your LittleFS tool installation.
+> If you don’t see this option, double-check your LittleFS tool installation.
 
 ---
 
-## 🌍 Accessing the Web Interface
+## Accessing the Web Interface
 
 1. Open **Serial Monitor** from Arduino IDE (**Tools > Serial Monitor**) and set baud rate to **115200**.
 2. After boot, the ESP32 will attempt to connect to Wi-Fi and print the **local IP address**, like:
