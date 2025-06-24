@@ -278,3 +278,25 @@ Your ESP32 will serve the web interface from internal storage using **LittleFS**
 4. You should see the **Smart PC Power Controller** web interface.
 
 ---
+
+## 🧾 Why We Are Uploading Code and Web Files?
+
+### 1. Uploading the `.ino` Sketch 
+The `.ino` file contains the main **logic and control code** for the ESP32. This includes:
+- Connecting to your Wi-Fi network
+- Handling HTTP requests from the browser
+- Activating the relay when triggered
+- Controlling the status LED
+- Reading input from the push button
+
+Without uploading this code, the ESP32 will be blank and won't know what to do.
+
+### 2. Uploading Web Files (Interface via LittleFS)
+The web interface (HTML, CSS, JavaScript) is not stored inside the `.ino` sketch — it must be uploaded separately using **LittleFS**. These files:
+- Serve the user interface you see in your browser
+- Provide a button to trigger the PC power switch
+- Run inside the ESP32's internal file system (not an SD card)
+
+Together, these allow your ESP32 to become a fully working **smart PC power controller** that you can access from any device on your local network.
+
+---
