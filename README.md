@@ -117,13 +117,13 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ### Explanation of the Diagram (Initial Testing)
 
-*Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
-
 The image below illustrates the **virtual wiring diagram** used for initial testing of the ESP32 Smart PC Power Controller in the Wokwi simulator. Each labeled part helps demonstrate how the ESP32, relay, LEDs, and buttons work together to simulate a PC power switch.
 
 ---
 
 ![Diagram Legend and Wiring](assets/explanation%20%231.png)
+
+*Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
 
 **Legend & Functionality Overview:**
 
