@@ -148,3 +148,40 @@ The image below illustrates the **virtual wiring diagram** used for initial test
 > This setup was tested virtually in Wokwi to validate the logic before applying it to physical hardware.
 
 ---
+
+## Actual Testing (Hardware Deployment)
+
+Since our initial testing in [Wokwi](https://wokwi.com/projects/434588948519734273) was successful, we can now proceed with **actual hardware testing** using a real ESP32 and physical components.
+
+Before we begin, please make sure you’ve completed the following requirements to ensure a smooth deployment:
+
+---
+
+### Pre-Requisites Checklist
+
+Before You Begin
+
+Please make sure you have the following prepared before flashing the project to your ESP32:
+
+1. **Hardware Components**  
+   Ensure you have everything listed in the [Hardware Requirements](#hardware-requirements), including:
+   - ESP32 Dev Board
+   - 5V Relay Module
+   - Push Button (optional for testing)
+   - LED + 220Ω Resistor
+   - Breadboard, Jumper Wires, and a suitable USB Cable (Type-C or Micro-USB)
+
+2. **Software & Tools**  
+   To run this project on actual hardware, you'll need:
+   - [**Arduino IDE**](https://www.arduino.cc/en/software)
+   - ESP32 Board Package installed in the IDE
+   - Required USB drivers for your ESP32 (CH340, CP2102, etc.)
+   - [**LittleFS Uploader Tool**](https://github.com/earlephilhower/arduino-littlefs-upload) to flash the web interface to ESP32 storage
+
+   > ⚠️ Don’t worry about setup steps just yet — we’ll cover all the installation instructions in the **Installation Process** section.
+
+3. **Cables and Power**  
+   Ensure you're using a **data-capable USB cable** to connect the ESP32.  
+   Power the relay with 5V, and avoid overloading the ESP32 by powering high-current devices directly.
+
+---
