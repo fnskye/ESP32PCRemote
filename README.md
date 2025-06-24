@@ -294,7 +294,7 @@ Your ESP32 will serve the web interface from internal storage using **LittleFS**
 
 ---
 
-## 🧾 Why We Are Uploading Code and Web Files?
+## Why We Are Uploading Code and Web Files?
 
 ### 1. Uploading the `.ino` Sketch 
 The `.ino` file contains the main **logic and control code** for the ESP32. 
@@ -319,5 +319,43 @@ These files:
 - Run inside the ESP32's internal file system (not an SD card)
 
 > These allow your ESP32 to become a fully working **smart PC power controller** that you can access from any device on your local network.
+
+---
+
+## Differences Between Simulation and Actual Code
+
+> While the Wokwi simulation helps prototype the logic, actual hardware development often involves tweaking pins and adding physical indicators for real-world interaction and stability. Here's what changed in the final version.
+
+---
+
+### 1. **GPIO Pin Changes**
+| Function          | Wokwi (Simulation) | Actual ESP32 Sketch | Notes |
+|-------------------|--------------------|----------------------|-------|
+| Relay Control     | GPIO 4             | GPIO 18              | Changed for better GPIO stability and layout compatibility on real board |
+| Status LED        | GPIO 2             | GPIO 5               | GPIO 5 is now used for a system status indicator (always ON) |
+| Push Button       | GPIO 12            | GPIO 12              | Same — no change |
+| Relay LED         | Not implemented    | GPIO 4               | Added for visual feedback; in Wokwi, the relay directly simulated the PC |
+
+---
+
+### 2. **New Features in Actual Code**
+
+| Feature                        | Description |
+|--------------------------------|-------------|
+| **Relay LED Indicator**        | GPIO 4 is used to show when the relay is active — helps confirm physical triggering visually |
+| **Debounce Logic**             | Prevents false triggering from physical button presses due to mechanical noise |
+| **Relay Pulse Timing**         | Limits activation to 1 second to safely simulate a PC power press |
+| **Reusable File Server**       | A single `serveFile()` function simplifies serving HTML, CSS pages via LittleFS |
+
+---
+
+### Why Code Differences Exist
+
+- Some **GPIO pins behave differently** on physical ESP32 boards than in simulation (e.g., boot behavior, signal stability).
+- We added a **Relay LED** because on real hardware, you can't "see" the relay toggle — this gives real-time confirmation.
+- Software **debounce and timing logic** are necessary to handle real button mechanics and safe PC triggering.
+
+> Don't worry, as the overall project functionality is the same.  
+> These improvements just make it **safer, clearer, and more stable** in a real-world setup.
 
 ---
