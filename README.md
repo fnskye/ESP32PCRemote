@@ -87,5 +87,10 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ![Initial Testing Diagram #3](assets/Project%20Structure%20%233.jpg)
 
-*Figure 3: Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, simulating PC power switch trigger.*
+*Figure 3: Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, mimicking a real PC power switch trigger.*
 
+---
+
+![Initial Testing Diagram #4](assets/explanation%20%231.png)
+
+*Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
