@@ -292,7 +292,7 @@ This includes:
 - Controlling the status LED
 - Reading input from the push button
 
-Without uploading this code, the ESP32 will be blank and won't know what to do.
+> Without uploading this code, the ESP32 will be blank and won't know what to do.
 
 ### 2. Uploading Web Files (Interface via LittleFS)
 The web interface (HTML, CSS, JavaScript) is not stored inside the `.ino` sketch — it must be uploaded separately using **LittleFS**. 
@@ -303,6 +303,6 @@ These files:
 - Provide a button to trigger the PC power switch
 - Run inside the ESP32's internal file system (not an SD card)
 
-These allow your ESP32 to become a fully working **smart PC power controller** that you can access from any device on your local network.
+> These allow your ESP32 to become a fully working **smart PC power controller** that you can access from any device on your local network.
 
 ---
