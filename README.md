@@ -35,17 +35,32 @@ This repository focuses on developing the **core system** — the ESP32-based po
 
 ## Hardware Requirements
 
-| Component                      | Quantity        |
-|-------------------------------|-----------------|
-| ESP32 Dev Board               | 1               |
-| 5V Relay Module               | 1               |
-| Push Button (normally open)   | 1               |
-| LED + 220Ω Resistor           | 1 (for status)  |
-| Jumper Wires + Breadboard     | As needed       |
+| Component                     | Quantity | Description                            |
+|------------------------------|----------|----------------------------------------|
+| ESP32 Dev Board              | 1        | Microcontroller for control & Wi-Fi    |
+| 5V Relay Module              | 1        | Used to simulate PC power button       |
+| Push Button (Normally Open)  | 1        | Local manual trigger                   |
+| LED + 220Ω Resistor          | 1        | Status indication                      |
+| 10kΩ Resistor                | 1        | Pull-down resistor for push button     |
+| Jumper Wires (M-M, M-F)      | As needed| Connections between ESP32 and components |
+| Breadboard                   | 1        | Prototyping board                      |
+| Power Adapter (5V USB)       | 1        | Powering the ESP32 board               |
 
 > ⚠️ **Note:** These are the minimum requirements to run the system.  
 > You are **free to customize or expand** the hardware setup as long as you understand what you're doing.
 
+### Component References
+
+| Image | Description |
+|-------|-------------|
+| ![ESP32](assets/esp32.png) | **ESP32 Dev Board** — your main controller |
+| ![Relay](assets/Relay_pinout.png) | **Relay Module** — triggers the PC power |
+| ![Push Button](assets/pushbutton.jpg) | **Push Button** — used for manual test triggering |
+| ![LED](assets/led.jpg) | **LED** — shows when relay is active |
+| ![220Ω Resistor](assets/220resistor.png) | **220Ω Resistor** — limits LED current |
+| ![10kΩ Resistor](assets/10kresistor.png) | **10kΩ Resistor** — pull-down for push button |
+| ![M-M Jumper](assets/mm jumper.jpg) | **Male-to-Male Jumper Wires** — ESP32 ↔ breadboard |
+| ![M-F Jumper](assets/mf jumper.jpg) | **Male-to-Female Jumper Wires** — for relay modules |
 ---
 
 ## Wiring Diagram (Simplified)
