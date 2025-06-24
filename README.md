@@ -332,8 +332,8 @@ These files:
 | Function          | Wokwi (Simulation) | Actual ESP32 Sketch | Notes |
 |-------------------|--------------------|----------------------|-------|
 | Relay Control     | GPIO 4             | GPIO 18              | Changed for better GPIO stability and layout compatibility on real board |
-| Status LED        | GPIO 5 (same)             | GPIO 5 (same)            | GPIO 5 is now used for a system status indicator (always ON) |
-| Push Button       | GPIO 12 (same)           | GPIO 12 (same)             | Same — no change |
+| Status LED        | GPIO 5 (same)             | GPIO 5 (same)            | Same - used for system status indicator (always ON) |
+| Push Button       | GPIO 12 (same)           | GPIO 12 (same)             | Same — no change at all |
 | Relay LED         | Not implemented    | GPIO 4               | Added for visual feedback; in Wokwi, the relay directly simulated the PC |
 
 ---
@@ -352,9 +352,8 @@ These files:
 ### Why Code Differences Exist
 
 - Some **GPIO pins behave differently** on physical ESP32 boards than in simulation (e.g., boot behavior, signal stability).
-- We added a **Relay LED** because on real hardware, you can't "see" the relay toggle — this gives real-time confirmation.
+- We added a **Relay LED** because on real hardware sometimes you can't "see" the relay toggle (depends on the model of the relay) — this gives real-time confirmation.
 - Software **debounce and timing logic** are necessary to handle real button mechanics and safe PC triggering.
-
 > Don't worry, as the overall project functionality is the same.  
 > These improvements just make it **safer, clearer, and more stable** in a real-world setup.
 
