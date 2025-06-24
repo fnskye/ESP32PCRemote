@@ -117,8 +117,34 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ### Explanation of the Diagram (Initial Testing)
 
-![Initial Testing Diagram #4](assets/explanation%20%231.png)
-
 *Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
+
+The image below illustrates the **virtual wiring diagram** used for initial testing of the ESP32 Smart PC Power Controller in the Wokwi simulator. Each labeled part helps demonstrate how the ESP32, relay, LEDs, and buttons work together to simulate a PC power switch.
+
+---
+
+![Diagram Legend and Wiring](assets/explanation%20%231.png)
+
+**Legend & Functionality Overview:**
+
+- 🟢 **Push Button (FOR TESTING)** – Used in the simulation to manually trigger the system, mimicking a software/web command.
+- 🔴 **Actual PC Switch (AS LED)** – Represents your PC's physical power switch. Triggered by the relay to simulate a real press.
+- 🟡 **Status LED** – Indicates system activity or response (e.g., lights up when triggered).
+- 🟠 **Resistors (220Ω)** – Current limiting resistors used for protecting LEDs.
+- 🧠 **ESP32 Dev Board** – The microcontroller at the heart of the system, running the firmware and handling Wi-Fi connectivity.
+- 🔌 **5V System / GND System** – Power rails for the breadboard circuits, derived from the ESP32’s onboard supply.
+- 🔵 **Relay Module** – Acts as the actual switch that physically “presses” the PC power button by completing its circuit.
+- 🟩 **GPIO Pins:**
+  - **GPIO 4** – Connected to relay signal input.
+  - **GPIO 5** – Controls the status LED.
+  - **GPIO 12** – Reads the state of the push button.
+
+**Behavior in Simulation:**
+- When the push button is pressed, GPIO 12 reads HIGH.
+- This triggers the relay via GPIO 4, simulating a PC power press for one second.
+- Simultaneously, GPIO 5 turns on the status LED to indicate that the action was taken.
+- Console logs (seen at the bottom of the simulation) show system startup and Wi-Fi connection status.
+
+> This setup was tested virtually in Wokwi to validate the logic before applying it to physical hardware.
 
 ---
