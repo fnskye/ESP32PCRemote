@@ -332,8 +332,8 @@ These files:
 | Function          | Wokwi (Simulation) | Actual ESP32 Sketch | Notes |
 |-------------------|--------------------|----------------------|-------|
 | Relay Control     | GPIO 4             | GPIO 18              | Changed for better GPIO stability and layout compatibility on real board |
-| Status LED        | GPIO 2             | GPIO 5               | GPIO 5 is now used for a system status indicator (always ON) |
-| Push Button       | GPIO 12            | GPIO 12              | Same — no change |
+| Status LED        | GPIO 5 (same)             | GPIO 5 (same)            | GPIO 5 is now used for a system status indicator (always ON) |
+| Push Button       | GPIO 12 (same)           | GPIO 12 (same)             | Same — no change |
 | Relay LED         | Not implemented    | GPIO 4               | Added for visual feedback; in Wokwi, the relay directly simulated the PC |
 
 ---
