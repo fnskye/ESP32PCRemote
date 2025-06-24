@@ -59,8 +59,8 @@ This repository focuses on developing the **core system** — the ESP32-based po
 | ![LED](assets/led.jpg) | **LED** — shows when relay is active |
 | ![220Ω Resistor](assets/220resistor.png) | **220Ω Resistor** — limits LED current |
 | ![10kΩ Resistor](assets/10kresistor.png) | **10kΩ Resistor** — pull-down for push button |
-| ![M-M Jumper](assets/mm jumper.jpg) | **Male-to-Male Jumper Wires** — ESP32 ↔ breadboard |
-| ![M-F Jumper](assets/mf jumper.jpg) | **Male-to-Female Jumper Wires** — for relay modules |
+| ![M-M Jumper](assets/mm_jumper.jpg) | **Male-to-Male Jumper Wires** — ESP32 ↔ breadboard |
+| ![M-F Jumper](assets/mf_jumper.jpg) | **Male-to-Female Jumper Wires** — for relay modules |
 ---
 
 ## Wiring Diagram (Simplified)
