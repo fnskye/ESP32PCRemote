@@ -1,6 +1,6 @@
 ## ESP32 Smart PC Power Controller
 
-Control your PC's power button remotely using an ESP32, a relay module, and a web interface — ideal for headless setups, remote access, or smart home integration.
+A **full guide** for Controlling your PC's power button remotely using an ESP32, a relay module, and a web interface — ideal for headless setups, remote access, or smart home integration.
 
 ---
 
@@ -16,7 +16,7 @@ However, **WoL typically doesn't work over the internet without complicated setu
 My goal was to build a system that could simulate pressing the PC power button using a relay, with commands sent through a web interface — even from anywhere in the world.
 
 > 🔧 **Note:** For full remote access over the internet, additional steps are required such as:
-> - Using an always-on device (like a **Raspberry Pi**, another **ESP32**, or a home server)
+> - Using an always-on device ( A **Raspberry Pi** or another device that stays online 24/7 to act as a secure gateway.)
 > - Setting up tunneling tools like **Tailscale**, **ZeroTier**, or **Ngrok**
 
 This repository focuses on developing the **core system** — the ESP32-based power control logic. If you're interested in the **internet-access setup**, I got a step-by-step tutorial separately to help you get started with secure remote access to your ESP32 controller below.
