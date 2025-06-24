@@ -42,7 +42,6 @@ This repository focuses on developing the **core system** — the ESP32-based po
 | Push Button (normally open)   | 1               |
 | LED + 220Ω Resistor           | 1 (for status)  |
 | Jumper Wires + Breadboard     | As needed       |
-| Power Adapter (5V micro-USB or USB-C) | 1        |
 
 > ⚠️ **Note:** These are the minimum requirements to run the system.  
 > You are **free to customize or expand** the hardware setup as long as you understand what you're doing.
