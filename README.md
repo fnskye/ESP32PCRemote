@@ -324,7 +324,7 @@ These files:
 
 ## Differences Between Simulation and Actual Code
 
-> While the Wokwi simulation helps prototype the logic, actual hardware development often involves tweaking pins and adding physical indicators for real-world interaction and stability. Here's what changed in the final version.
+While the Wokwi simulation helps prototype the logic, actual hardware development often involves tweaking pins and adding physical indicators for real-world interaction and stability. Here we can see the key changes in the final version.
 
 ---
 
@@ -345,11 +345,8 @@ These files:
 | **Relay LED Indicator**        | GPIO 4 is used to show when the relay is active — helps confirm physical triggering visually |
 | **Debounce Logic**             | Prevents false triggering from physical button presses due to mechanical noise |
 | **Relay Pulse Timing**         | Limits activation to 1 second to safely simulate a PC power press |
-| **Reusable File Server**       | A single `serveFile()` function simplifies serving HTML, CSS pages via LittleFS |
 
 ---
-
-### Why Code Differences Exist
 
 - Some **GPIO pins behave differently** on physical ESP32 boards than in simulation (e.g., boot behavior, signal stability).
 - We added a **Relay LED** because on real hardware sometimes you can't "see" the relay toggle (depends on the model of the relay) — this gives real-time confirmation.
