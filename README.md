@@ -271,3 +271,10 @@ Your ESP32 will serve the web interface from internal storage using **LittleFS**
 1. Open **Serial Monitor** from Arduino IDE (**Tools > Serial Monitor**) and set baud rate to **115200**.
 2. After boot, the ESP32 will attempt to connect to Wi-Fi and print the **local IP address**, like:
 
+> Connected to WiFi!
+> IP Address: (e.g., `http://192.168.1.42`)
+
+3. Open a browser and go to `http://<ESP32-IP>` (e.g., `http://192.168.1.42`).
+4. You should see the **Smart PC Power Controller** web interface.
+
+---
