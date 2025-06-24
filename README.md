@@ -115,6 +115,10 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ---
 
+### Explanation of the Diagram (Initial Testing)
+
 ![Initial Testing Diagram #4](assets/explanation%20%231.png)
 
 *Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
+
+---
