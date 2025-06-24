@@ -355,3 +355,48 @@ While the Wokwi simulation helps prototype the logic, actual hardware developmen
 > These improvements just make it **safer, clearer, and more stable** in a real-world setup.
 
 ---
+
+## Layouts and Setups of the Actual Hardware (Breadboard and Wiring)
+
+> **Why we do this:**  
+> This section shows you how to physically assemble your ESP32 system — including how each component connects on the breadboard, what pins are used, and how to avoid common wiring mistakes.
+
+---
+
+### General Setup Overview
+
+The project involves connecting several components to the ESP32:
+
+- A **relay module** for triggering the PC power
+- A **push button** for manual testing
+- A **status LED** for system power indicator
+- A **relay LED** for visual confirmation that the PC signal was sent
+- Required **resistors** for button/LED protection
+- A **breadboard** and **jumper wires** for prototyping
+
+---
+
+### Breadboard Layout Diagram
+
+![Breadboard Diagram](assets/Project%20Structure%20#1.jpg)
+
+_(Replace this with your final wiring diagram if updated)_
+
+---
+
+### Pin-to-Pin Wiring Table
+
+| ESP32 Pin | Connects To           | Description                         |
+|-----------|------------------------|-------------------------------------|
+| GPIO 18   | Relay IN               | Relay control (Active LOW)          |
+| GPIO 5    | Status LED (+220Ω)     | Indicates system power              |
+| GPIO 4    | Relay LED (+220Ω)      | Lights up when relay is triggered   |
+| GPIO 12   | Push Button (to GND)   | Manual trigger                      |
+| GND       | Relay GND, Button GND, LED GND | Common ground for all components |
+| 3.3V/5V   | Relay VCC, LED VCC     | Depending on component requirement  |
+
+> 💡 Use **pull-down resistor (10kΩ)** for the push button if needed for stability  
+> 🧪 Add a **diode** across the relay coil (if mechanical) to avoid back EMF (optional but recommended)
+
+---
+
