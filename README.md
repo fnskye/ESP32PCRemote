@@ -1,6 +1,6 @@
 ## ESP32 Smart PC Power Controller
 
-A **full guide** for Controlling your PC's power button remotely using an ESP32, a relay module, and a web interface — ideal for headless setups, remote access, or smart home integration.
+An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Microcontroller, Relay Module Integration, and Web-Based User Interface.
 
 ---
 
@@ -25,11 +25,10 @@ This repository focuses on developing the **core system** — the ESP32-based po
 
 ## Features
 
-- 🖱️ Physical button or web-triggered PC power control
-- 🌐 Simple web interface served from ESP32 (LittleFS)
-- 🔁 1-second relay pulse simulates pressing your PC's power button
-- 📶 Wi-Fi based — no need for external servers
-- 💡 Status LED to indicate system is running
+- The system supports dual control modes: a physical push-button connected to the ESP32 for local PC power activation, and a web-based interface for remote triggering through a network connection.
+- This setup does not harm the computer, as it only delivers a minimal voltage and enough to simulate a momentary contact across the Power SW (Power Switch) pins, just like a physical button press in your PC case.
+- This setup retains the functionality of the PC’s original case-mounted power switch, allowing users to power the system on or off manually at any time, in parallel with the ESP32 and relay-based remote control.
+- This system uses a 1-second relay pulse to safely simulate a press of your PC’s power button and a status LED is also included to indicate when the system is running.
 
 ---
 
