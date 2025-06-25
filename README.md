@@ -39,11 +39,11 @@ This repository focuses on developing the **core system** — the ESP32-based po
 |------------------------------|----------|----------------------------------------|
 | ESP32 Dev Board              | 1        | Microcontroller for control & Wi-Fi    |
 | 5V Relay Module              | 1        | Used to simulate PC power button       |
-| Push Button (Normally Open)  | 1        | Local manual trigger                   |
-| LED + 220Ω Resistor          | 1        | Status indication                      |
-| 10kΩ Resistor                | 1        | Pull-down resistor for push button     |
+| Push Button  | 1        | Local manual trigger                   |
+| LED         | As needed        | Status indication                      |
+| 220Ω Resistor and 10kΩ Resistor                | As needed        | for LEDs Current and Pull-down resistor for push button     |
 | Jumper Wires (M-M, M-F)      | As needed| Connections between ESP32 and components |
-| Breadboard                   | 1        | Prototyping board                      |
+| Breadboard                   | 1 to 2      | Prototyping board                      |
 | Power Adapter (5V USB)       | 1        | Powering the ESP32 board               |
 
 > ⚠️ **Note:** These are the minimum requirements to run the system.  
