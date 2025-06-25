@@ -19,7 +19,8 @@ My goal was to build a system that could simulate pressing the PC power button u
 > - Using an always-on device ( A **Raspberry Pi** or another device that stays online 24/7 to act as a secure gateway.)
 > - Setting up tunneling tools like **Tailscale**, **ZeroTier**, or **Ngrok**
 
-This repository focuses on developing the **core system** — the ESP32-based power control logic. If you're interested in the **internet-access setup**, I got a step-by-step tutorial separately to help you get started with secure remote access to your ESP32 controller below.
+This repository focuses on the development of the core system — the ESP32-based power control logic that handles the relay, physical button input, and status indication.
+If you're looking to set up secure internet-based access, I've prepared a step-by-step tutorial (linked below) to help you configure remote control of your ESP32, even behind the CGNAT.
 
 ---
 
@@ -91,20 +92,17 @@ We will use a Relay **NO (Normally Open)** and **COM** to connect to your PC's p
 
 This project was initially developed and simulated using [Wokwi](https://wokwi.com/), a virtual simulator for Arduino and ESP32 development.
 
-If you want to view and simulate the project virtually on Wokwi, you can check it out here along with the initial code:  
+If you’d like to explore or simulate the project virtually, you can access the Wokwi simulation environment below, which includes the initial circuit setup and source code:
 🔗 [Wokwi Simulation – ESP32 Remote Power Control](https://wokwi.com/projects/434588948519734273)
 
 ### Why Simulate First?
 
-I built and tested the project virtually before applying it to real hardware to ensure that:
+The project was built and tested virtually before being implemented on physical hardware to ensure that the code functions correctly, the relay responds as expected, the button and LED behave properly, and no components are damaged during development. Simulating the setup helped **identify and resolve potential issues early, reducing development time and avoiding unnecessary troubleshooting.**
 
-- The code logic works correctly
-- The relay triggers as expected
-- The button and LED behavior is functional
-- No physical components get damaged during development
-
-Simulating the project first helped me **identify and fix potential issues early**, saving time and avoiding unnecessary troubleshooting on real hardware.
-This project was initially developed and simulated in Wokwi, a virtual electronics simulator for Arduino and ESP32 projects.
+> The code logic works correctly
+> The relay triggers as expected
+> The button and LED behavior is functional
+> No physical components get damaged during development
 
 ### Screenshot of the Diagram (Initial Testing)
 
