@@ -98,12 +98,17 @@ If you’d like to explore or simulate the project virtually, you can access the
 
 ### Why Simulate First?
 
-The project was built and tested virtually before being implemented on physical hardware to ensure that the code functions correctly, the relay responds as expected, the button and LED behave properly, and no components are damaged during development. Simulating the setup helped **identify and resolve potential issues early, reducing development time and avoiding unnecessary troubleshooting.**
+This project was first developed and tested in a virtual environment before using real hardware. This was done to make sure the code worked properly, the relay triggered as expected, the button and LED worked correctly, and no physical parts—especially those connected to the motherboard's power switch—were damaged. Simulating the project helped make the development process safer, easier, and more beginner-friendly by finding and fixing problems early.
 
-> The code logic works correctly
-> The relay triggers as expected
-> The button and LED behavior is functional
-> No physical components get damaged during development
+> ***Main goal of simulating:***
+
+> The code logic works correctly.
+
+> The relay triggers as it should.
+
+> The button and LED behavior is functional.
+
+> No physical components get damaged during development.
 
 ### Screenshot of the Diagram (Initial Testing)
 
