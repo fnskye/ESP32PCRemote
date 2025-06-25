@@ -30,7 +30,7 @@ This repository focuses on developing the **core system** — the ESP32-based po
 - This setup **retains** the functionality of the PC’s original case-mounted power switch, allowing users to power the system on or off manually at any time, in parallel with the ESP32 Smart PC Power Controller.
 - This system uses a **1-second relay pulse** to safely simulate a press of your PC’s power button and a status LED included to indicate when the system is running.
 
-- (adding more soon)
+> (adding more soon)
 
 ---
 
