@@ -57,8 +57,9 @@ This repository focuses on developing the **core system** — the ESP32-based po
 | ![Relay](assets/hardware_requirements_8.jpg) | **Relay Module** — triggers the PC Switch |
 | ![Push Button](assets/hardware_requirements_4.jpg) | **Push Button** — used for manual test triggering |
 | ![LED](assets/hardware_requirements_3.jpg) | **LED** — shows when relay is active |
-| ![Resistor](assets/hardware_requirements_5.jpg) | **220Ω Resistor** — limits LED current && **10kΩ Resistor** — for pulling down push button |
-| ![Jumpers](assets/hardware_requirements_7.jpg) | **Jumper Wires (M-M & M-F)** — for ESP32 ↔ components |
+| ![Resistor](assets/hardware_requirements_1.jpg) | **220Ω Resistor** — limits LED current && 
+**10kΩ Resistor** — for pulling down push button |
+| ![Jumpers](assets/hardware_requirements_5.jpg) | **Jumper Wires (M-M & M-F)** — essential for ESP32 components |
 
 ---
 
