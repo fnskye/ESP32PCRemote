@@ -98,7 +98,7 @@ If you’d like to explore or simulate the project virtually, you can access the
 
 ### Why Simulate First?
 
-This project was first developed and tested in a **virtual environment** before using real hardware. This was done to make sure the code worked properly, the relay triggered as expected, the button and LED worked correctly, and no physical parts—especially those connected to the motherboard's power switch—were damaged. Simulating the project helped make the development process safer, easier, and more beginner-friendly by finding and fixing problems early.
+This project was first developed and tested in a **virtual environment** before using real hardware. This was done to make sure the code worked properly, the relay triggered as expected, the button and LED worked correctly, and no physical parts—especially those connected to the motherboard's power switch. Simulating the project helped make the development process safer, easier, and more beginner-friendly by finding and fixing problems early.
 
 ***Main goal of simulation:***
 
@@ -112,13 +112,13 @@ This project was first developed and tested in a **virtual environment** before 
 
 ### Screenshot of the Diagram (Initial Testing)
 
-Initial testing was done virtually using Wokwi to verify the logic and functionality of the ESP32-based remote power control project before applying it to the actual hardware. Below are the screenshots taken during different stages of the simulation:
+Initial testing was done virtually using Wokwi to verify the logic and functionality of the ***ESP32 Smart PC Power Controller*** before applying it to the actual hardware. Below are the screenshots taken during different stages of the simulation:
 
 ---
 
 ![Initial Testing Diagram #1](assets/Project%20Structure%20%231.jpg)
 
-*Figure 1: Initial diagram setup in the virtual environment, showing the ESP32 ready to connect to a Wi-Fi network.*
+**Figure 1:* Initial diagram setup in the virtual environment, showing the ESP32 ready to connect to a Wi-Fi network.*
 
 ---
 
