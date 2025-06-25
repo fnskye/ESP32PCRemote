@@ -17,7 +17,7 @@ There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a P
 
 However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
 
-My goal was to build a system that could simulate pressing the PC power button using a relay, with commands sent through a web interface — even from anywhere in the world.
+***My primary objective*** was to create a system that can press the PC’s power button by using a relay, with commands sent through a web interface. The goal was to make it work both locally and remotely, with a focus on allowing control from anywhere in the world through an internet connection. This gives users the ability to turn their PC on or off without needing to be near it or connected to the same local network.
 
 > 🔧 **Note:** For full remote access over the internet, additional steps are required such as:
 > - Using an always-on device ( A **Raspberry Pi** or another device that stays online 24/7 to act as a secure gateway.)
