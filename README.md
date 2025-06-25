@@ -25,10 +25,10 @@ This repository focuses on developing the **core system** — the ESP32-based po
 
 ## Features
 
-- The system supports dual control modes: a physical push-button connected to the ESP32 for local PC power activation, and a web-based interface for remote triggering through a network connection.
-- This setup does not harm the computer, as it only delivers a minimal voltage and enough to simulate a momentary contact across the Power SW (Power Switch) pins, just like a physical button press in your PC case.
-- This setup retains the functionality of the PC’s original case-mounted power switch, allowing users to power the system on or off manually at any time, in parallel with the ESP32 and relay-based remote control.
-- This system uses a 1-second relay pulse to safely simulate a press of your PC’s power button and a status LED is also included to indicate when the system is running.
+- **The system supports dual control modes:** a physical push-button connected to the ESP32 for local PC power activation, and a web-based interface for remote triggering through a network connection.
+- This setup does **NOT HARM the computer**, as it only delivers a minimal voltage and enough to simulate a momentary contact across the Power SW **(Power Switch) pins**, just like a physical button press in your PC case.
+- This setup **retains** the functionality of the PC’s original case-mounted power switch, allowing users to power the system on or off manually at any time, in parallel with the ESP32 and relay-based remote control.
+- This system uses a **1-second relay pulse** to safely simulate a press of your PC’s power button and a status LED included to indicate when the system is running.
 
 ---
 
