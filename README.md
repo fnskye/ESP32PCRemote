@@ -53,14 +53,13 @@ This repository focuses on developing the **core system** — the ESP32-based po
 
 | Image | Description |
 |-------|-------------|
-| ![ESP32](assets/esp32.png) | **ESP32 Dev Board** — your main controller |
-| ![Relay](assets/Relay_pinout.png) | **Relay Module** — triggers the PC power |
-| ![Push Button](assets/pushbutton.jpg) | **Push Button** — used for manual test triggering |
-| ![LED](assets/led.jpg) | **LED** — shows when relay is active |
-| ![220Ω Resistor](assets/220resistor.png) | **220Ω Resistor** — limits LED current |
-| ![10kΩ Resistor](assets/10kresistor.png) | **10kΩ Resistor** — pull-down for push button |
-| ![M-M Jumper](assets/mm_jumper.jpg) | **Male-to-Male Jumper Wires** — ESP32 ↔ breadboard |
-| ![M-F Jumper](assets/mf_jumper.jpg) | **Male-to-Female Jumper Wires** — for relay modules |
+| ![ESP32](assets/hardware_requirements#7.jpg) | **ESP32 Dev Board** — The main controller |
+| ![Relay](assets/hardware_requirements#8.jpg) | **Relay Module** — triggers the PC Switch |
+| ![Push Button](assets/hardware_requirements#4.jpg) | **Push Button** — used for manual test triggering |
+| ![LED](assets/hardware_requirements#3.jpg) | **LED** — shows when relay is active |
+| ![Resistor](assets/hardware_requirements#5.jpg) | **220Ω Resistor** — limits LED current && **10kΩ Resistor** for pulling down push button |
+| ![Jumpers](assets/hardware_requirements#7.jpg) | **Jumper Wires (M-M & M-F)** — for ESP32 ↔ components |
+
 ---
 
 ## Wiring Diagram (Simplified)
