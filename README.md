@@ -93,6 +93,7 @@ We will use a Relay **NO (Normally Open)** and **COM** to connect to your PC's p
 This project was initially developed and simulated using [Wokwi](https://wokwi.com/), a virtual simulator for Arduino and ESP32 development.
 
 If you’d like to explore or simulate the project virtually, you can access the Wokwi simulation environment below, which includes the initial circuit setup and source code:
+
 🔗 [Wokwi Simulation – ESP32 Remote Power Control](https://wokwi.com/projects/434588948519734273)
 
 ### Why Simulate First?
