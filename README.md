@@ -9,7 +9,7 @@ An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Mi
 I created this project because I wanted a way to **turn my PC on and off using the ESP32**, both **locally** and **over the internet**. While local control was straightforward, **remote control via the internet** presented challenges — especially due to **CGNAT (Carrier-Grade NAT)** and the lack of a public IP.
 
 There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a PC on the local network. If you only need **local access**, I recommend using that instead — it's much simpler to set up.  
-🔍 [GitHub Search: Wake-on-LAN Projects](https://github.com/search?q=wake+on+lan)
+🔍 [GitHub Search: Wake-on-LAN Projects](https://github.com/search?q=wake+on+lan++pc)
 
 However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
 
