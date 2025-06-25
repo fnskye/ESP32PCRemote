@@ -53,7 +53,7 @@ This repository focuses on developing the **core system** — the ESP32-based po
 
 | Image | Description |
 |-------|-------------|
-| ![ESP32](assets/hardware_requirements#7.jpg) | **ESP32 Dev Board** — The main controller |
+| ![ESP32]("assets/hardware_requirements#7.jpg") | **ESP32 Dev Board** — The main controller |
 | ![Relay](assets/hardware_requirements#8.jpg) | **Relay Module** — triggers the PC Switch |
 | ![Push Button](assets/hardware_requirements#4.jpg) | **Push Button** — used for manual test triggering |
 | ![LED](assets/hardware_requirements#3.jpg) | **LED** — shows when relay is active |
