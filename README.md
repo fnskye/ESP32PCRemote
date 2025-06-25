@@ -1,6 +1,10 @@
 ## ESP32 Smart PC Power Controller
 
-An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Microcontroller, Relay Module Integration, and Web-Based User Interface.
+**An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Microcontroller with Relay Module Integration and a Web-Based User Interface**
+
+This guide provides a complete walkthrough for building a reliable system that allows users to remotely control the power state of a desktop PC using an ESP32 microcontroller. By combining the ESP32 with a relay module, the system simulates a physical press of the PC's power switch, enabling ***both local and internet-based power control***. The ESP32 receives commands through a web interface, allowing remote activation from any browser-enabled device within the local network. Additionally, this repository includes ongoing development and guidance for extending access beyond the local network, enabling secure remote control over the internet.
+
+This project includes essential guides covering key aspects of implementation, such as hardware setup, GPIO pin configuration, relay triggering, use of a physical button, status LED indicators, and web server deployment on the ESP32. Additionally, this project addresses the challenge of internet access behind CGNAT and outlines possible solutions for secure remote connectivity. This solution is ideal for users who require remote access to their PC without relying on **Wake-on-LAN or public IP configurations**.
 
 ---
 
