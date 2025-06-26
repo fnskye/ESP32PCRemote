@@ -1,12 +1,33 @@
-# **ESP32 Smart PC Power Controller**
+# ESP32 Smart PC Power Controller
 
-**An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Microcontroller with Relay Module Integration and a Web-Based User Interface**
+### A Comprehensive Technical Guide to Implementing Remote Desktop PC Power Control Using an ESP32 Microcontroller with Relay Module and Web Interface Integration
 
-This guide provides a complete walkthrough for building a reliable system that allows users to remotely control the power state of a desktop PC using an ESP32 microcontroller. By combining the ESP32 with a relay module, the system simulates a physical press of the PC's power switch, enabling ***both local and internet-based power control***. The ESP32 receives commands through a web interface, allowing remote activation from any browser-enabled device within the local network. Additionally, this repository includes ongoing development and guidance for extending access beyond the local network, enabling secure remote control over the internet.
+This project presents a complete, technically detailed guide for developing a system that enables remote control of a desktop computer’s power state using an **ESP32 microcontroller**. By integrating a **relay module**, the ESP32 is capable of simulating a physical press of the PC’s power switch. This allows users to power their PC **locally** or **remotely via the internet**, with control issued through a responsive, browser-based user interface.
 
-This project includes essential guides covering key aspects of implementation, such as hardware setup, GPIO pin configuration, relay triggering, use of a physical button, status LED indicators, and web server deployment on the ESP32. Additionally, this project addresses the challenge of internet access behind CGNAT and outlines possible solutions for secure remote connectivity. This solution is ideal for users who require remote access to their PC without relying on **Wake-on-LAN or public IP configurations**.
+Initially designed for **local network access**, the system leverages the ESP32’s onboard Wi-Fi capabilities to host a web server that responds to user commands. The documentation also includes step-by-step instructions for extending the project’s functionality to support **remote internet access**, even in environments constrained by **Carrier-Grade NAT (CGNAT)** or lacking a dedicated public IP address.
 
-## 📘 Table of Contents
+Key areas of focus covered in this project include:
+- Proper hardware setup and component wiring
+- GPIO pin assignment and safe relay triggering logic
+- Integration of a physical push-button for manual override
+- LED status indicators for power state feedback
+- Deployment of a lightweight web server hosted directly on the ESP32
+- Solutions for secure, remote access using Tailscale, Ngrok, or Raspberry Pi bridges
+
+This implementation is particularly suitable for users who seek **reliable remote PC access** without depending on Wake-on-LAN functionality or public IP address availability. By directly simulating the PC’s power button, this method offers compatibility across most standard desktop systems.
+
+> **Note:** For users who already possess a **Raspberry Pi** with an Ethernet port, the system can alternatively leverage **Wake-on-LAN (WoL)** methods for remote PC activation. If this applies, you may choose to bypass the relay-based approach and proceed directly to the WoL configuration section.  
+> If you are using a lower-cost Raspberry Pi model or a device without LAN support, Ngrok and Tailscale remain viable and effective alternatives — provided that an **always-on host device** is available to relay commands to the ESP32.
+
+---
+
+> **Important:**  
+It is strongly recommended that users review all relevant sections of this guide before starting. This ensures compatibility with your hardware and network environment, and provides the context necessary for a secure and stable deployment.  
+The instructions and design principles in this repository aim to support both beginner and intermediate developers working on personal automation, smart home integration, or remote IT management tasks.
+
+---
+
+## Table of Contents
 
 - [Why I Made This](#why-i-made-this)
 - [Features of the Project](#features)
