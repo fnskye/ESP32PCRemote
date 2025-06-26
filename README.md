@@ -9,8 +9,8 @@ This project includes essential guides covering key aspects of implementation, s
 ## 📘 Table of Contents
 
 - [Why I Made This](#why-i-made-this)
-- [Features of the Project](#-features)
-- [Hardware Requirements](#-hardware-requirements)
+- [Features of the Project](#features)
+- [Hardware Requirements](#hardware-requirements)
 - [Solution: Tunnel Through CGNAT](#-solution-tunnel-through-cgnat)
   - [Tailscale – Private, Secure Access](#-tailscale--secure-persistent-and-private)
   - [Ngrok – Public Access via HTTPS](#-ngrok--public-access-with-https-links)
