@@ -1,4 +1,4 @@
-## ESP32 Smart PC Power Controller
+## **ESP32 Smart PC Power Controller**
 
 **An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Microcontroller with Relay Module Integration and a Web-Based User Interface**
 
@@ -28,7 +28,7 @@ If you're looking to set up secure internet-based access, I've prepared a step-b
 
 ---
 
-## Features
+## **Features**
 
 - **The system supports dual control modes:** a physical push-button connected to the ESP32 for local PC power activation, and a web-based interface for remote triggering through a network connection.
 - This setup does **NOT HARM the computer**, as it only delivers a minimal voltage and enough to simulate a momentary contact across the Power SW **(Power Switch) pins**, just like a physical button press in your PC case.
@@ -39,7 +39,7 @@ If you're looking to set up secure internet-based access, I've prepared a step-b
 
 ---
 
-## Hardware Requirements
+## **Hardware Requirements**
 
 | Component                     | Quantity | Description                            |
 |------------------------------|----------|----------------------------------------|
@@ -68,7 +68,7 @@ If you're looking to set up secure internet-based access, I've prepared a step-b
 
 ---
 
-## Wiring Diagram (Simplified)
+## **Wiring Diagram (Simplified)**
 
 | ESP32 Pin | Connected To              |
 |-----------|---------------------------|
@@ -82,7 +82,7 @@ We will use a Relay **NO (Normally Open)** and **COM** to connect to your PC's p
 
 ---
 
-## Web Interface
+## **Web Interface**
 
 - Hosted on the ESP32 using LittleFS
 - Pages:
@@ -92,7 +92,7 @@ We will use a Relay **NO (Normally Open)** and **COM** to connect to your PC's p
 
 ---
 
-## Project Structure (In Wokwi)
+## **Project Structure (In Wokwi)**
 
 This project was initially developed and simulated using [Wokwi](https://wokwi.com/), a virtual simulator for Arduino and ESP32 development.
 
@@ -172,7 +172,7 @@ The image below illustrates the **virtual wiring diagram** used for initial test
 
 ---
 
-## Actual Testing (Hardware Deployment)
+## **Actual Testing (Hardware Deployment)**
 
 Since our initial testing in [Wokwi](https://wokwi.com/projects/434588948519734273) was successful, we can now proceed with **actual hardware testing** using a real ESP32 and physical components.
 
@@ -209,7 +209,7 @@ Please make sure you have the following prepared before flashing the project to 
 
 ---
 
-## Installation Process 
+## **Installation Process **
 
 > ⚠️ **Note:** This installation guide is written for **Windows users**.  
 > If you're using **macOS** or **Linux**, the general steps are the same, but:
@@ -258,7 +258,7 @@ We use LittleFS to upload web interface files to the ESP32.
 
 ---
 
-## Uploading the Code
+## **Uploading the Code**
 
 You can view or download the main sketch file here:  
 🔗 [sketch_esp32.ino](https://github.com/fnskye/ESP32PCRemote/blob/main/sketch_esp32.ino)
@@ -275,7 +275,7 @@ You can view or download the main sketch file here:
 
 ---
 
-## Uploading Web Files (LittleFS)
+## **Uploading Web Files (LittleFS)**
 
 Your ESP32 will serve the web interface from internal storage using **LittleFS**.
 
@@ -289,7 +289,7 @@ Your ESP32 will serve the web interface from internal storage using **LittleFS**
 
 ---
 
-## Accessing the Web Interface
+## **Accessing the Web Interface**
 
 1. Open **Serial Monitor** from Arduino IDE (**Tools > Serial Monitor**) and set baud rate to **115200**.
 2. After boot, the ESP32 will attempt to connect to Wi-Fi and print the **local IP address**, like:
@@ -302,7 +302,7 @@ Your ESP32 will serve the web interface from internal storage using **LittleFS**
 
 ---
 
-## Why We Are Uploading Code and Web Files?
+## **Why We Are Uploading Code and Web Files?**
 
 ### 1. Uploading the `.ino` Sketch 
 The `.ino` file contains the main **logic and control code** for the ESP32. 
@@ -330,7 +330,7 @@ These files:
 
 ---
 
-## Differences Between Simulation and Actual Code
+## **Differences Between Simulation and Actual Code**
 
 While the Wokwi simulation helps prototype the logic, actual hardware development often involves tweaking pins and adding physical indicators for real-world interaction and stability. Here we can see the key changes in the final version.
 
@@ -364,7 +364,7 @@ While the Wokwi simulation helps prototype the logic, actual hardware developmen
 
 ---
 
-## Layouts and Setups of the Actual Hardware (Breadboard and Wiring)
+## **Layouts and Setups of the Actual Hardware (Breadboard and Wiring)**
 
 > **Why we do this:**  
 > This section shows you how to physically assemble your ESP32 system — including how each component connects on the breadboard, what pins are used, and how to avoid common wiring mistakes.
@@ -408,3 +408,38 @@ _(Replace this with your final wiring diagram if updated)_
 
 ---
 
+## **Making Your ESP32 Accessible Online (Over CGNAT Networks)**
+
+### Understanding the Limitations of CGNAT
+
+Many internet service providers (ISPs), particularly those offering residential or mobile data plans, use **Carrier-Grade Network Address Translation (CGNAT)** to conserve public IPv4 addresses. Under CGNAT:
+
+- Your router is assigned a **private IP address** (e.g., `10.x.x.x`, `100.x.x.x`).
+- The public IP address is shared among many subscribers.
+- As a result, **port forwarding is not possible**, since the external traffic cannot be routed directly to your device.
+
+> Even if port forwarding is configured correctly on your router, it will not function under CGNAT unless you are assigned a true public IP address.
+
+---
+
+### 📦 Can You Request a Public IP?
+
+Yes — in some cases, a public IP address can be requested from your ISP. However:
+
+- This often incurs an **additional monthly fee**.
+- It may require upgrading to a **business plan** or submitting a formal request.
+- Some ISPs do **not offer public IP addresses** for residential customers at all.
+
+Due to these limitations, it is typically more practical to use alternative methods to make your ESP32 accessible remotely.
+
+---
+
+## ✅ Recommended Solutions: Tunneling Through CGNAT
+
+To enable remote access to an ESP32 device behind CGNAT, the following solutions are recommended. These methods create secure tunnels or private networks that bypass CGNAT restrictions entirely.
+
+---
+
+## Option 1: 🛡️ Tailscale (Recommended – Secure, Persistent, Free)
+
+[Tailscale](https://tailscale.com/) is a zero-configuration mesh VPN t

@@ -63,7 +63,7 @@
     async function sendCommand(endpoint) {
       statusMsg.textContent = "Sending command...";
       try {
-        const response = await fetch(`http://192.168.254.153/${endpoint}`, {
+        const response = await fetch(`https://0c63-180-191-66-207.ngrok-free.app/${endpoint}`, {
           method: "POST"
         });
 
