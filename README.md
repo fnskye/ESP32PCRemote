@@ -6,6 +6,24 @@ This guide provides a complete walkthrough for building a reliable system that a
 
 This project includes essential guides covering key aspects of implementation, such as hardware setup, GPIO pin configuration, relay triggering, use of a physical button, status LED indicators, and web server deployment on the ESP32. Additionally, this project addresses the challenge of internet access behind CGNAT and outlines possible solutions for secure remote connectivity. This solution is ideal for users who require remote access to their PC without relying on **Wake-on-LAN or public IP configurations**.
 
+## 📘 Table of Contents
+
+- [Why I Made This](#why-i-made-this)
+- [Understanding CGNAT and Public IP Limitations](#-understanding-the-limitations-of-cgnat)
+- [Solution: Tunnel Through CGNAT](#-solution-tunnel-through-cgnat)
+  - [Tailscale – Private, Secure Access](#-tailscale--secure-persistent-and-private)
+  - [Ngrok – Public Access via HTTPS](#-ngrok--public-access-with-https-links)
+  - [Raspberry Pi – 24/7 Bridge](#-raspberry-pi--247-bridge-for-remote-access)
+    - [Raspberry Pi Connect](#-raspberry-pi-connect--full-desktop-remote-access)
+    - [Raspberry Pi Connect Lite](#-raspberry-pi-connect-lite--terminal-only-access)
+- [Important Notes for Raspberry Pi Users](#-important-note-for-raspberry-pi-users)
+- [Summary and Device Recommendations](#-summary)
+- [Methods of Installation](#section-7-methods-of-installation)
+- [Wake-on-LAN Setup](#wake-on-lan-setup)
+- [ESP32 Power Control Logic](#esp32-power-control-logic)
+- [Security and Best Practices](#-security-considerations)
+- [Next Steps](#-next-steps)
+
 ---
 
 ### Why I Made This
@@ -520,7 +538,9 @@ If you have a **Raspberry Pi**, it can act as a persistent **online gateway** to
 You can use it alongside Tailscale or Ngrok, or even take advantage of **Raspberry Pi Connect**, depending on your device model and OS.
 
 > ⚠️ ***Important Note for Raspberry Pi Users:*** 
+
 > If your Raspberry Pi has a **LAN port**, you can use it to directly **wake your PC via Wake-on-LAN**, without needing any tunneling at all.  
+
 > This is the most efficient method — skip to the **Wake-on-LAN section** if this applies to you.
 
 If your Raspberry Pi does **not** support full desktop or Ethernet, you can still use:
