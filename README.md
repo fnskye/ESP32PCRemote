@@ -40,12 +40,12 @@ The instructions and design principles in this repository aim to support both be
   - [Why Simulate First?](#why-simulate-first)
       - [Main goal of simulation:](#main-goal-of-simulation)
   - [Screenshot of the Diagram (Initial Testing)](#screenshot-of-the-diagram-initial-testing)
-      - [Figure 1: Initial diagram setup](#main-goal-of-simulation)   
-      - [Figure 2: Successful Wi-Fi connection](#main-goal-of-simulation)   
-      - [Figure 3: Simulation of the power control feature](#main-goal-of-simulation)   
-      - [Figure 4: Legend and explanation of the components and symbols](#main-goal-of-simulation)   
-- [Summary and Device Recommendations](#-summary)
-- [Summary and Device Recommendations](#-summary)
+      - [Figure 1: Initial diagram setup](#figure-1-initial-diagram-setup-in-the-virtual-environment-showing-the-esp32-ready-to-connect-to-a-wi-fi-network)   
+      - [Figure 2: Successful Wi-Fi connection](#figure-2-successful-wi-fi-connection-with-the-esp32-displaying-its-assigned-ip-address-confirming-network-connectivity)   
+      - [Figure 3: Simulation of the power control feature](#figure-3-simulation-of-the-power-control-feature--when-the-push-button-is-pressed-the-relay-is-activated-for-one-second-mimicking-a-real-pc-power-switch-trigger)   
+      - [Figure 4: Legend and explanation of the components and symbols](#figure-4-legend-and-explanation-of-the-components-and-symbols-used-in-the-virtual-diagrams-above-providing-clarity-for-understanding-the-simulation-setup)   
+- [Actual Testing (Hardware Deployment)](#-summary)
+  - [Pre-Requisites Checklist](#-summary)
 - [Summary and Device Recommendations](#-summary)
 - [Summary and Device Recommendations](#-summary)
 - [Summary and Device Recommendations](#-summary)
@@ -284,7 +284,7 @@ Please make sure you have the following prepared before flashing the project to 
 
 ---
 
-## **Installation Process **
+### **Installation Process of Software & Tools**
 
 > ⚠️ **Note:** This installation guide is written for **Windows users**.  
 > If you're using **macOS** or **Linux**, the general steps are the same, but:
@@ -298,25 +298,25 @@ Please make sure you have the following prepared before flashing the project to 
 
 To begin working with your ESP32 hardware, follow these installation steps:
 
-### 1. Install Arduino IDE
+#### 1. Install Arduino IDE
 Download and install the latest version of the Arduino IDE from:  
 🔗 https://www.arduino.cc/en/software
 
-### 2. Install ESP32 Board Support
+#### 2. Install ESP32 Board Support
 - Open Arduino IDE.
 - Go to **File > Preferences**.
 - In the **"Additional Board Manager URLs"**, paste this:("https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json")
 - Click **OK**, then go to **Tools > Board > Boards Manager**.
 - Search for **ESP32** and click **Install** on the package by **Espressif Systems**.
 
-### 3. Install USB Drivers (CH340 / CP2102)
+#### 3. Install USB Drivers (CH340 / CP2102)
 Depending on your ESP32 board:
 - [CH340 Driver (Windows)](https://sparks.gogo.co.nz/ch340.html)
 - [CP2102 Driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
 
 Install the correct driver so your computer can detect the ESP32 over USB.
 
-### 4. Install LittleFS Uploader
+#### 4. Install LittleFS Uploader
 We use LittleFS to upload web interface files to the ESP32.
 
 - Visit the repo: [arduino-littlefs-upload](https://github.com/earlephilhower/arduino-littlefs-upload)
@@ -324,7 +324,7 @@ We use LittleFS to upload web interface files to the ESP32.
 - After installing, restart Arduino IDE.
 - You should now see **"ESP32 Sketch Data Upload"** under the **Tools** menu.
 
-### 5. Set the Correct Board and Port
+#### 5. Set the Correct Board and Port
 - Go to **Tools > Board**, and select your ESP32 model (e.g., **ESP32 Dev Module**).
 - Go to **Tools > Port**, and select the COM port assigned to your ESP32.
 - Also set:
