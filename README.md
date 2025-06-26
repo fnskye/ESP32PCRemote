@@ -17,14 +17,34 @@ There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a P
 
 However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
 
-***My primary objective*** was to create a system that can press the PC’s power button by using a relay, with commands sent through a web interface. The goal was to make it work both locally and remotely, with a focus on allowing control from anywhere in the world through an internet connection. This gives users the ability to turn their PC on or off without needing to be near it or connected to the same local network.
+> 💡 **Already have a Raspberry Pi?**
+>
+> If you already own a **Raspberry Pi** and it has an **Ethernet port**, you can use it to **send Wake-on-LAN packets directly to your PC** — even from outside your network — using tools like **Tailscale**, **Ngrok**, or **Raspberry Pi Connect**.  
+> This allows you to **skip the relay-based ESP32 system entirely** if your PC supports WoL.
+>
+> ✅ If your Pi meets these requirements:
+> - Has a **LAN port** (for reliable WoL signaling)
+> - Runs **64-bit Raspberry Pi OS Bookworm**
+> - (Optional) Supports **Raspberry Pi Connect** for full desktop access
+>
+> Then you can skip straight to the **Wake-on-LAN section** in this guide.
+
+Still, if you’re looking for a **cheap method**, you can:
+- Use **any low-cost Pi** (like Pi Zero, Pi 3, etc.)
+- Combine it with **Tailscale** or **Ngrok**
+- And still follow the rest of this guide to remotely trigger your ESP32 relay
+
+---
+
+***My primary objective*** was to create a system that can simulate pressing the PC’s power button using a relay, with commands sent through a web interface. The goal was to make it work both locally and remotely, with a focus on allowing control from anywhere in the world through an internet connection. This gives users the ability to turn their PC on or off without needing to be near it or connected to the same local network.
 
 > 🔧 **Note:** For full remote access over the internet, additional steps are required such as:
-> - Using an always-on device ( A **Raspberry Pi** or another device that stays online 24/7 to act as a secure gateway.)
+> - Using an **always-on device** (e.g., a Raspberry Pi or another device that stays online 24/7 to act as a secure gateway.)
 > - Setting up tunneling tools like **Tailscale**, **ZeroTier**, or **Ngrok**
 
-This repository focuses on the development of the core system — the ESP32-based power control logic that handles the relay, physical button input, and status indication.
-If you're looking to set up secure internet-based access, I've prepared a step-by-step tutorial (linked below) to help you configure remote control of your ESP32, even behind the CGNAT.
+This repository focuses on the development of the core system — the ESP32 Smart PC Power Controller logic that handles the relay, physical button input, and status indication.
+
+If you are ready to set up secure internet-based access, I've prepared a step-by-step tutorial (linked below) to help you configure remote control of your ESP32, even behind CGNAT.
 
 ---
 
@@ -434,12 +454,75 @@ Due to these limitations, it is typically more practical to use alternative meth
 
 ---
 
-## ✅ Recommended Solutions: Tunneling Through CGNAT
+## 🌐 Making Your ESP32 Accessible Online (Over CGNAT Networks)
+
+### ❓ Understanding the Limitations of CGNAT
+
+Many internet service providers (ISPs), particularly those offering residential or mobile data plans, use **Carrier-Grade Network Address Translation (CGNAT)** to conserve public IPv4 addresses. Under CGNAT:
+
+- Your router is assigned a **private IP address** (e.g., `10.x.x.x`, `100.x.x.x`).
+- The public IP address is shared among many subscribers.
+- As a result, **port forwarding is not possible**, since the external traffic cannot be routed directly to your device.
+
+> Even if port forwarding is configured correctly on your router, it will not function under CGNAT unless you are assigned a true public IP address.
+
+---
+
+### 📦 Can You Request a Public IP?
+
+Yes — in some cases, a public IP address can be requested from your ISP. However:
+
+- This often incurs an **additional monthly fee**.
+- It may require upgrading to a **business plan** or submitting a formal request.
+- Some ISPs do **not offer public IP addresses** for residential customers at all.
+
+Due to these limitations, it is typically more practical to use alternative methods to make your ESP32 accessible remotely.
+
+---
+
+### Recommended Solutions: Tunneling Through CGNAT
 
 To enable remote access to an ESP32 device behind CGNAT, the following solutions are recommended. These methods create secure tunnels or private networks that bypass CGNAT restrictions entirely.
 
 ---
 
-## Option 1: 🛡️ Tailscale (Recommended – Secure, Persistent, Free)
+## **Option 1: Using Tailscale (Recommended – Secure, Persistent, Free)**
 
-[Tailscale](https://tailscale.com/) is a zero-configuration mesh VPN t
+[Tailscale](https://tailscale.com/) is a zero-configuration mesh VPN that establishes a private, encrypted network between your devices. It is ideal for long-term, secure access to local devices — including ESP32 microcontrollers — from anywhere in the world.
+
+### ✅ Key Benefits
+- Fully functional behind **NAT and CGNAT**
+- **No port forwarding or public IP required**
+- **Free** for personal use
+- Persistent, encrypted connections
+- Access is restricted to authenticated devices
+
+### ⚙️ Implementation Overview
+1. Install Tailscale on a **PC** or **Raspberry Pi** connected to the same network as the ESP32.
+2. Configure the host device to forward HTTP requests to the ESP32’s local IP address.
+3. From any other Tailscale-connected device, use the Tailscale-assigned IP address of the host to securely access the ESP32.
+
+📘 *A full setup guide is available in* `docs/tailscale_setup.md`.
+
+---
+
+## Option 2: Using Ngrok (Public Access, Temporary Sessions)
+
+[Ngrok](https://ngrok.com/) allows you to expose local servers (such as an ESP32 HTTP server) to the public internet via a secure tunnel. It is well suited for demonstrations, testing, or temporary remote access.
+
+### ✅ Key Benefits
+- Works behind CGNAT and firewalls
+- Provides a **public HTTPS URL**
+- Quick setup and easy to use
+
+### ⚠️ Limitations
+- The **free plan** supports tunnels for up to **8 hours**
+- Public URLs **change with each session**
+- Requires manual configuration for authentication and access control
+
+### ⚙️ Implementation Overview
+1. Install Ngrok on a **PC** or **Raspberry Pi** on the same local network as the ESP32.
+2. Start a tunnel with:
+   ```bash
+   ngrok http 192.168.1.100:80
+
