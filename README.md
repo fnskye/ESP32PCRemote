@@ -454,75 +454,120 @@ Due to these limitations, it is typically more practical to use alternative meth
 
 ---
 
-## 🌐 Making Your ESP32 Accessible Online (Over CGNAT Networks)
+## Making Your ESP32 Accessible Online (Over CGNAT Networks)
 
-### ❓ Understanding the Limitations of CGNAT
+> **Important Note:**  
+> If you already have a **Raspberry Pi** with a **LAN (Ethernet) port**, you can use it to **send Wake-on-LAN (WoL) packets** to power up your PC remotely.  
+> In that case, you may **skip the tunneling section** and proceed directly to the **Wake-on-LAN setup** later in this guide.
+>
+> However, if you're looking for a cheaper option or don't have an Ethernet-capable Pi, you can still:
+> - Use **Ngrok** or **Tailscale** to control your ESP32 or PC over the internet
+> - Choose any **low-cost, always-on device** (like Pi Zero, Pi 3, or old laptops)
+>
+> Just make sure that whichever method you choose, **the device stays online** to keep your tunnel or network active.
 
-Many internet service providers (ISPs), particularly those offering residential or mobile data plans, use **Carrier-Grade Network Address Translation (CGNAT)** to conserve public IPv4 addresses. Under CGNAT:
+---
+
+### Understanding the Limitations of CGNAT
+
+Many internet service providers (ISPs), especially those offering residential or mobile data plans, use **Carrier-Grade NAT (CGNAT)** to conserve public IPv4 addresses. Under CGNAT:
 
 - Your router is assigned a **private IP address** (e.g., `10.x.x.x`, `100.x.x.x`).
-- The public IP address is shared among many subscribers.
-- As a result, **port forwarding is not possible**, since the external traffic cannot be routed directly to your device.
+- The public IP address is shared among multiple users.
+- As a result, **port forwarding is not possible**, since the external traffic cannot reach your device directly.
 
-> Even if port forwarding is configured correctly on your router, it will not function under CGNAT unless you are assigned a true public IP address.
-
----
-
-### 📦 Can You Request a Public IP?
-
-Yes — in some cases, a public IP address can be requested from your ISP. However:
-
-- This often incurs an **additional monthly fee**.
-- It may require upgrading to a **business plan** or submitting a formal request.
-- Some ISPs do **not offer public IP addresses** for residential customers at all.
-
-Due to these limitations, it is typically more practical to use alternative methods to make your ESP32 accessible remotely.
+> Even if port forwarding is configured on your router, it will not function unless your ISP assigns you a real public IP — which typically requires an upgrade to a business plan and extra monthly fees.
 
 ---
 
-### Recommended Solutions: Tunneling Through CGNAT
+## Solution: Tunnel Through CGNAT
 
-To enable remote access to an ESP32 device behind CGNAT, the following solutions are recommended. These methods create secure tunnels or private networks that bypass CGNAT restrictions entirely.
+To make your ESP32 project accessible over the internet despite CGNAT, you can use **tunneling services** or **private VPN networks**. These tools allow you to reach your ESP32 from anywhere in the world — without relying on public IP addresses or port forwarding.
 
----
-
-## **Option 1: Using Tailscale (Recommended – Secure, Persistent, Free)**
-
-[Tailscale](https://tailscale.com/) is a zero-configuration mesh VPN that establishes a private, encrypted network between your devices. It is ideal for long-term, secure access to local devices — including ESP32 microcontrollers — from anywhere in the world.
-
-### ✅ Key Benefits
-- Fully functional behind **NAT and CGNAT**
-- **No port forwarding or public IP required**
-- **Free** for personal use
-- Persistent, encrypted connections
-- Access is restricted to authenticated devices
-
-### ⚙️ Implementation Overview
-1. Install Tailscale on a **PC** or **Raspberry Pi** connected to the same network as the ESP32.
-2. Configure the host device to forward HTTP requests to the ESP32’s local IP address.
-3. From any other Tailscale-connected device, use the Tailscale-assigned IP address of the host to securely access the ESP32.
-
-📘 *A full setup guide is available in* `docs/tailscale_setup.md`.
+The most effective methods are:
 
 ---
 
-## Option 2: Using Ngrok (Public Access, Temporary Sessions)
+### Tailscale – Secure, Persistent, and Private
 
-[Ngrok](https://ngrok.com/) allows you to expose local servers (such as an ESP32 HTTP server) to the public internet via a secure tunnel. It is well suited for demonstrations, testing, or temporary remote access.
+[Tailscale](https://tailscale.com/) is a free, peer-to-peer VPN that creates a private network between your devices using WireGuard. It works perfectly behind CGNAT and firewalls.
 
-### ✅ Key Benefits
-- Works behind CGNAT and firewalls
-- Provides a **public HTTPS URL**
-- Quick setup and easy to use
+- Creates a **private, encrypted tunnel** between your devices
+- Automatically reconnects on reboot or network change
+- Runs **indefinitely** without timeouts or manual restarts
+- Perfect for **secure, long-term access**
+- Ideal for projects where **only you or selected devices** need access to the ESP32
 
-### ⚠️ Limitations
-- The **free plan** supports tunnels for up to **8 hours**
-- Public URLs **change with each session**
-- Requires manual configuration for authentication and access control
+---
 
-### ⚙️ Implementation Overview
-1. Install Ngrok on a **PC** or **Raspberry Pi** on the same local network as the ESP32.
-2. Start a tunnel with:
-   ```bash
-   ngrok http 192.168.1.100:80
+### Ngrok – Public Access with HTTPS Links
+
+[Ngrok](https://ngrok.com/) is a tunneling tool that creates a **public HTTPS link** to a local server. This allows your ESP32's web interface (hosted on a PC or Raspberry Pi) to be accessed from anywhere — even under CGNAT.
+
+- Provides a **temporary public URL** to any local port (e.g., ESP32 at `192.168.x.x:80`)
+- Fully functional even without a public IP
+- Can be configured to **restart automatically**, allowing it to run continuously
+- Useful for **sharing access**, testing, or remote control via browser or phone
+
+Although free Ngrok sessions expire after ~8 hours, a simple restart script allows it to run as long as your device is powered and connected.
+
+---
+
+### Raspberry Pi – 24/7 Bridge for Remote Access
+
+If you have a **Raspberry Pi**, it can act as a persistent **online gateway** to your ESP32, giving you reliable, always-on remote access.
+
+You can use it alongside Tailscale or Ngrok, or even take advantage of **Raspberry Pi Connect**, depending on your device model and OS.
+
+> ⚠️ ***Important Note for Raspberry Pi Users:*** 
+> If your Raspberry Pi has a **LAN port**, you can use it to directly **wake your PC via Wake-on-LAN**, without needing any tunneling at all.  
+> This is the most efficient method — skip to the **Wake-on-LAN section** if this applies to you.
+
+If your Raspberry Pi does **not** support full desktop or Ethernet, you can still use:
+
+---
+
+#### Raspberry Pi Connect – Full Desktop Remote Access
+
+**Raspberry Pi Connect** allows you to **remotely control the graphical desktop** of your Raspberry Pi over the internet, using Raspberry Pi’s own secure relay servers.
+
+##### Key Features
+- Remote access to the Pi’s **full desktop environment**
+- No port forwarding or public IP required
+- Works securely via **Pi’s official relay network**
+
+##### Requirements
+- **Raspberry Pi 5**, **Pi 4**, or **Pi 400**
+- **64-bit Raspberry Pi OS Bookworm** with **Wayland display server**
+- Not available on older Pi models
+
+---
+
+#### Raspberry Pi Connect Lite – Terminal-Only Access
+
+For older models or headless systems, **Connect Lite** provides basic but effective remote shell access — no desktop required.
+
+##### Key Features
+- **No screen sharing**, but secure **remote shell (CLI) access**
+- Lightweight and fast
+- Ideal for running command-line tools, scripts, and tunneling software
+
+With Connect Lite, you can:
+- Remotely send Wake-on-LAN packets
+- Start or monitor **Ngrok** and **Tailscale** tunnels
+- Control your ESP32 or PC from anywhere using a terminal
+
+---
+
+### Summary
+
+In short:
+
+- If your **Pi has Ethernet**, Wake-on-LAN may be all you need.
+- If not, use **Tailscale** or **Ngrok** to access your ESP32 or PC remotely.
+- If you're choosing a **cheap always-on device**, any low-cost Raspberry Pi will work — just make sure it stays powered.
+
+➡️ Proceed to:  
+### `Section 7: Methods of Installation`
+
 
