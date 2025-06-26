@@ -33,8 +33,20 @@ The instructions and design principles in this repository aim to support both be
   - [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi)
 - [Features of the Project](#features)
 - [Hardware Requirements](#hardware-requirements)
+  - [IComponent/Hardware References](#component-references)
+- [Wiring Diagram (Simplified)](#wiring-diagram-simplified)
+- [Web Interface](#web-interface)
+- [Project Structure (In Wokwi)](#project-structure-in-wokwi)
+  - [Why Simulate First?](#why-simulate-first)
+      - [Main goal of simulation:](#-summary)
 - [Summary and Device Recommendations](#-summary)
-- [Methods of Installation](#section-7-methods-of-installation)
+- [Summary and Device Recommendations](#-summary)
+- [Summary and Device Recommendations](#-summary)
+- [Summary and Device Recommendations](#-summary)
+- [Summary and Device Recommendations](#-summary)
+- [Summary and Device Recommendations](#-summary)
+
+- [Methods of Installation](#methods-of-installation)
 - [Wake-on-LAN Setup](#wake-on-lan-setup)
 - [ESP32 Power Control Logic](#esp32-power-control-logic)
 - [Security and Best Practices](#-security-considerations)
@@ -163,7 +175,7 @@ If you’d like to explore or simulate the project virtually, you can access the
 
 This project was first developed and tested in a **virtual environment** before using real hardware. This was done to make sure the code worked properly, the relay triggered as expected, the button and LED worked correctly, and no physical parts—especially those connected to the motherboard's power switch. Simulating the project helped make the development process safer, easier, and more beginner-friendly by finding and fixing problems early.
 
-***Main goal of simulation:***
+#### Main goal of simulation:
 
 > The code logic works correctly.
 
@@ -608,7 +620,9 @@ In short:
 - If not, use **Tailscale** or **Ngrok** to access your ESP32 or PC remotely.
 - If you're choosing a **cheap always-on device**, any low-cost Raspberry Pi will work — just make sure it stays powered.
 
-➡️ Proceed to:  
-### `Section 7: Methods of Installation`
+
+### `Methods of Installation`
+
+
 
 
