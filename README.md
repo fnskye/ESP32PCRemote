@@ -30,22 +30,20 @@ The instructions and design principles in this repository aim to support both be
 ## Table of Contents
 
 - [Why I Made This](#why-i-made-this)
+- [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi?)
 - [Features of the Project](#features)
 - [Hardware Requirements](#hardware-requirements)
+- [Summary and Device Recommendations](#-summary)
+- [Methods of Installation](#section-7-methods-of-installation)
+- [Wake-on-LAN Setup](#wake-on-lan-setup)
+- [ESP32 Power Control Logic](#esp32-power-control-logic)
+- [Security and Best Practices](#-security-considerations)
 - [Solution: Tunnel Through CGNAT](#-solution-tunnel-through-cgnat)
   - [Tailscale – Private, Secure Access](#-tailscale--secure-persistent-and-private)
   - [Ngrok – Public Access via HTTPS](#-ngrok--public-access-with-https-links)
   - [Raspberry Pi – 24/7 Bridge](#-raspberry-pi--247-bridge-for-remote-access)
     - [Raspberry Pi Connect](#-raspberry-pi-connect--full-desktop-remote-access)
     - [Raspberry Pi Connect Lite](#-raspberry-pi-connect-lite--terminal-only-access)
-- [Important Notes for Raspberry Pi Users](#-important-note-for-raspberry-pi-users)
-- [Summary and Device Recommendations](#-summary)
-- [Methods of Installation](#section-7-methods-of-installation)
-- [Wake-on-LAN Setup](#wake-on-lan-setup)
-- [ESP32 Power Control Logic](#esp32-power-control-logic)
-- [Security and Best Practices](#-security-considerations)
-- [Next Steps](#-next-steps)
-
 ---
 
 ### Why I Made This
