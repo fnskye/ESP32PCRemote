@@ -1,4 +1,4 @@
-## **ESP32 Smart PC Power Controller**
+# **ESP32 Smart PC Power Controller**
 
 **An In-Depth Technical Guide to Implementing Remote PC Power Control via ESP32 Microcontroller with Relay Module Integration and a Web-Based User Interface**
 
