@@ -30,7 +30,7 @@ The instructions and design principles in this repository aim to support both be
 ## Table of Contents
 
 - [Why I Made This](#why-i-made-this)
-  - [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi?)
+  - [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi)
 - [Features of the Project](#features)
 - [Hardware Requirements](#hardware-requirements)
 - [Summary and Device Recommendations](#-summary)
