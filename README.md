@@ -38,8 +38,12 @@ The instructions and design principles in this repository aim to support both be
 - [Web Interface](#web-interface)
 - [Project Structure (In Wokwi)](#project-structure-in-wokwi)
   - [Why Simulate First?](#why-simulate-first)
-      - [Main goal of simulation:](#-summary)
-- [Summary and Device Recommendations](#-summary)
+      - [Main goal of simulation:](#main-goal-of-simulation)
+  - [Screenshot of the Diagram (Initial Testing)](#screenshot-of-the-diagram-initial-testing)
+      - [Figure 1: Initial diagram setup](#main-goal-of-simulation)   
+      - [Figure 2: Successful Wi-Fi connection](#main-goal-of-simulation)   
+      - [Figure 3: Simulation of the power control feature](#main-goal-of-simulation)   
+      - [Figure 4: Legend and explanation of the components and symbols](#main-goal-of-simulation)   
 - [Summary and Device Recommendations](#-summary)
 - [Summary and Device Recommendations](#-summary)
 - [Summary and Device Recommendations](#-summary)
@@ -193,19 +197,19 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ![Initial Testing Diagram #1](assets/Project%20Structure%20%231.jpg)
 
-**Figure 1:* Initial diagram setup in the virtual environment, showing the ESP32 ready to connect to a Wi-Fi network.*
+#### **Figure 1:* Initial diagram setup in the virtual environment, showing the ESP32 ready to connect to a Wi-Fi network.*
 
 ---
 
 ![Initial Testing Diagram #2](assets/Project%20Structure%20%232.jpg)
 
-*Figure 2: Successful Wi-Fi connection with the ESP32 displaying its assigned IP address, confirming network connectivity.*
+#### *Figure 2: Successful Wi-Fi connection with the ESP32 displaying its assigned IP address, confirming network connectivity.*
 
 ---
 
 ![Initial Testing Diagram #3](assets/Project%20Structure%20%233.jpg)
 
-*Figure 3: Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, mimicking a real PC power switch trigger.*
+#### *Figure 3: Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, mimicking a real PC power switch trigger.*
 
 ---
 
@@ -217,7 +221,7 @@ The image below illustrates the **virtual wiring diagram** used for initial test
 
 ![Diagram Legend and Wiring](assets/explanation%20%231.png)
 
-*Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
+#### *Figure 4: Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
 
 **Legend & Functionality Overview:**
 
