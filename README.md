@@ -1,10 +1,10 @@
 # ESP32 Smart PC Power Controller
 
-### A Comprehensive Technical Guide to Implementing Remote Desktop PC Power Control Using an ESP32 Microcontroller with Relay Module and Web Interface Integration
+### A Comprehensive Technical Guide on Implementing Remote Desktop PC Power Control Using an ESP32 Microcontroller with Relay Module and Web Interface Integration
 
 This project presents a complete, technically detailed guide for developing a system that enables remote control of a desktop computer’s power state using an **ESP32 microcontroller**. By integrating a **relay module**, the ESP32 is capable of simulating a physical press of the PC’s power switch. This allows users to power their PC **locally** or **remotely via the internet**, with control issued through a responsive, browser-based user interface.
 
-Initially designed for **local network access**, the system leverages the ESP32’s onboard Wi-Fi capabilities to host a web server that responds to user commands. The documentation also includes step-by-step instructions for extending the project’s functionality to support **remote internet access**, even in environments constrained by **Carrier-Grade NAT (CGNAT)** or lacking a dedicated public IP address.
+The project is initially designed for **local network access**, the system leverages the ESP32’s onboard Wi-Fi capabilities to host a web server that responds to user commands. The documentation also includes step-by-step instructions for extending the project’s functionality to support **remote internet access**, even in environments constrained by **Carrier-Grade NAT (CGNAT)** or lacking a dedicated public IP address.
 
 Key areas of focus covered in this project include:
 - Proper hardware setup and component wiring
@@ -14,14 +14,14 @@ Key areas of focus covered in this project include:
 - Deployment of a lightweight web server hosted directly on the ESP32
 - Solutions for secure, remote access using Tailscale, Ngrok, or Raspberry Pi bridges
 
-This implementation is particularly suitable for users who seek **reliable remote PC access** without depending on Wake-on-LAN functionality or public IP address availability. By directly simulating the PC’s power button, this method offers compatibility across most standard desktop systems.
+This implementation is particularly suitable for users who seek **reliable remote PC access** without depending on ***Wake-on-LAN functionality or public IP address availability***. By directly simulating the PC’s power button, this method offers compatibility across most standard desktop systems.
 
-> **Note:** For users who already possess a **Raspberry Pi** with an Ethernet port, the system can alternatively leverage **Wake-on-LAN (WoL)** methods for remote PC activation. If this applies, you may choose to bypass the relay-based approach and proceed directly to the WoL configuration section.  
-> If you are using a lower-cost Raspberry Pi model or a device without LAN support, Ngrok and Tailscale remain viable and effective alternatives — provided that an **always-on host device** is available to relay commands to the ESP32.
+**Note:** For users who already possess a **Raspberry Pi** with an Ethernet port, you can proceed with **Wake-on-LAN (WoL)** methods for remote PC activation. If this applies, you may choose to bypass the relay-based approach and proceed directly to the WoL configuration section.  
+If you are using a ***lower-cost Raspberry Pi model*** or a device **without LAN support**, using an ESP32 and hosting through Ngrok or Tailscale remain viable and effective alternatives — provided that an **always-on host device** is available to relay commands to the ESP32.
 
 ---
 
-> **Important:**  
+**Important:**  
 It is strongly recommended that users review all relevant sections of this guide before starting. This ensures compatibility with your hardware and network environment, and provides the context necessary for a secure and stable deployment.  
 The instructions and design principles in this repository aim to support both beginner and intermediate developers working on personal automation, smart home integration, or remote IT management tasks.
 
