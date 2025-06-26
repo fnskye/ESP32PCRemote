@@ -31,9 +31,12 @@ The instructions and design principles in this repository aim to support both be
 
 - [Why I Made This](#why-i-made-this)
   - [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi)
+
 - [Features of the Project](#features)
+
 - [Hardware Requirements](#hardware-requirements)
-  - [IComponent/Hardware References](#component-references)
+
+  - [Component/Hardware References](#component-references)
 - [Wiring Diagram (Simplified)](#wiring-diagram-simplified)
 - [Web Interface](#web-interface)
 - [Project Structure (In Wokwi)](#project-structure-in-wokwi)
@@ -46,9 +49,18 @@ The instructions and design principles in this repository aim to support both be
       - [Figure 4: Legend and explanation of the components and symbols](#figure-4-legend-and-explanation-of-the-components-and-symbols-used-in-the-virtual-diagrams-above-providing-clarity-for-understanding-the-simulation-setup)   
 - [Actual Testing (Hardware Deployment)](#-summary)
   - [Pre-Requisites Checklist](#-summary)
-- [Summary and Device Recommendations](#-summary)
-- [Summary and Device Recommendations](#-summary)
-- [Summary and Device Recommendations](#-summary)
+  - [Installation Process of Software & Tools](#-summary)
+  - [Uploading the Code](#-summary)
+  - [Accessing the Web Interface](#-summary)
+  - [Differences Between Simulation and Actual Code](#differences-between-simulation-and-actual-code)
+  - [Layouts and Setups of the Actual Hardware (Breadboard and Wiring)](#layouts-and-setups-of-the-actual-hardware-breadboard-and-wiring)
+    - [General Setup Overview](#general-setup-overview)
+    - [Breadboard Layout Diagram](#breadboard-layout-diagram)
+
+
+- [Making Your ESP32 Accessible Online (Over CGNAT Networks)](#making-your-esp32-accessible-online-over-cgnat-networks)
+- [Understanding the Limitations of CGNAT](#understanding-the-limitations-of-cgnat)
+       - [Requesting a Public IP](#-can-you-request-a-public-ip)
 
 - [Methods of Installation](#methods-of-installation)
 - [Wake-on-LAN Setup](#wake-on-lan-setup)
