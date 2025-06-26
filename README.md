@@ -30,7 +30,7 @@ The instructions and design principles in this repository aim to support both be
 ## Table of Contents
 
 - [Why I Made This](#why-i-made-this)
-- [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi?)
+  - [Important Notes for Raspberry Pi Users](#already-have-a-raspberry-pi?)
 - [Features of the Project](#features)
 - [Hardware Requirements](#hardware-requirements)
 - [Summary and Device Recommendations](#-summary)
@@ -55,7 +55,7 @@ There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a P
 
 However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
 
-> 💡 **Already have a Raspberry Pi?**
+> 💡 ###**Already have a Raspberry Pi?**
 >
 > If you already own a **Raspberry Pi** and it has an **Ethernet port**, you can use it to **send Wake-on-LAN packets directly to your PC** — even from outside your network — using tools like **Tailscale**, **Ngrok**, or **Raspberry Pi Connect**.  
 > This allows you to **skip the relay-based ESP32 system entirely** if your PC supports WoL.
