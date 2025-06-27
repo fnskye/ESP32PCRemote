@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
-  --bg-color: #1f242d;
-  --text-color: #fff;
-  --main-color: #0ef;
+  --bg-color: #1e1e2f;
+  --text-color: #f4f4f4;
+  --main-color: #00d9ff;
+  --main-hover: #00b0cc;
+  --btn-shadow: #00eaff88;
+  --status-success: #00ffa2;
+  --status-error: #ff4d6d;
 }
 
 * {
@@ -70,24 +74,32 @@ body {
 
 .btn {
   display: inline-block;
-  padding: 1rem 2.8rem;
-  margin: 0.5rem;
+  padding: 1rem 3rem;
+  margin: 0.6rem;
   background: var(--main-color);
   color: var(--bg-color);
-  border-radius: 4rem;
+  border-radius: 3rem;
   font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: 0.05rem;
   cursor: pointer;
-  transition: box-shadow 0.3s;
-  font-size: 1.4rem;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 0 1.2rem var(--btn-shadow);
 }
+
 
 .btn[disabled] {
-  opacity: 0.5;
+  background: #555;
+  color: #aaa;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
+
 .btn:hover:not([disabled]) {
-  box-shadow: 0 0 10px var(--main-color);
+  background: var(--main-hover);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 1.5rem var(--btn-shadow);
 }
 
 .home {
@@ -110,7 +122,12 @@ body {
 }
 
 #statusMsg {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   font-size: 1.4rem;
-  color: var(--main-color);
+  font-weight: 500;
+  color: var(--status-success); /* Default */
+}
+
+#statusMsg.error {
+  color: var(--status-error);
 }

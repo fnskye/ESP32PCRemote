@@ -3,78 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Remotely control your PC using an ESP32" />
+  <meta name="description" content="Remotely control your PC using an ESP32." />
   <title>Smart PC Power</title>
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <style>
-    .navbar a {
-      position: relative;
-      display: inline-block;
-      padding: 10px;
-      color: white;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .navbar a::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      background-color: #00adb5;
-      bottom: 0;
-      left: 0;
-      transform: scaleX(0);
-      transform-origin: bottom right;
-      transition: transform 0.3s ease-out;
-    }
-    .navbar a:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-    .btn[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  </style>
 </head>
+
 <body>
   <header class="header">
-    <a href="#home" class="logo">ESP32 Hub</a>
-    <nav class="navbar">
+    <a href="#home" class="logo" aria-label="ESP32 Hub logo">ESP32 Hub</a>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
       <a href="#home">Home</a>
     </nav>
   </header>
 
-  <section class="home" id="pc-control">
-    <div class="home-content">
-      <h1>Smart PC Power Control</h1>
-      <p>Control your PC remotely using ESP32.</p>
-      <button id="powerBtn" class="btn"><i class='bx bx-power-off'></i> Press Power</button>
-      <button class="btn" disabled><i class='bx bx-refresh'></i> Restart (Coming Soon)</button>
-      <button class="btn" disabled><i class='bx bx-power-off'></i> Shutdown (Coming Soon)</button>
-      <p id="statusMsg"></p>
+  <main id="pc-control" class="home">
+    <div class="home-content" role="region" aria-labelledby="main-heading">
+      <h1 id="main-heading">Smart PC Power Control</h1>
+      <p>Control your PC remotely using your ESP32 device.</p>
+
+      <div class="button-group" role="group" aria-label="PC Controls">
+        <button id="powerBtn" class="btn" aria-label="Power on PC">
+          <i class='bx bx-power-off'></i> Press Power
+        </button>
+        <button class="btn" disabled>
+          <i class='bx bx-refresh'></i> Restart (Coming Soon)
+        </button>
+        <button class="btn" disabled>
+          <i class='bx bx-power-off'></i> Shutdown (Coming Soon)
+        </button>
+      </div>
+
+      <p id="statusMsg" role="status" aria-live="polite"></p>
     </div>
-  </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Smart PC Control. Powered by ESP32.</p>
+  </footer>
 
   <script>
     const statusMsg = document.getElementById("statusMsg");
     const powerBtn = document.getElementById("powerBtn");
 
-    powerBtn.addEventListener("click", () => {
+    powerBtn.addEventListener("click", async () => {
       statusMsg.textContent = "Sending command...";
-      fetch("https://0c63-180-191-66-207.ngrok-free.app/trigger", { method: "POST" })
-        .then(response => {
-          if (!response.ok) throw new Error("Failed to send command");
-          return response.text();
-        })
-        .then(result => {
-          statusMsg.textContent = result || "Command sent successfully!";
-        })
-        .catch(err => {
-          statusMsg.textContent = "Error: " + err.message;
+
+      try {
+        const response = await fetch("https://0c63-180-191-66-207.ngrok-free.app/trigger", {
+          method: "POST"
         });
+        if (!response.ok) throw new Error("Failed to send command");
+        const result = await response.text();
+        statusMsg.textContent = result || "Command sent successfully!";
+      } catch (err) {
+        statusMsg.textContent = "Error: " + err.message;
+      }
     });
   </script>
 </body>
