@@ -1,119 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@stillyoswa's ESP32 Projects</title>
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Remotely control your PC using an ESP32" />
+  <title>Smart PC Power</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <style>
+    .navbar a {
+      position: relative;
+      display: inline-block;
+      padding: 10px;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #00adb5;
+      bottom: 0;
+      left: 0;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+    .navbar a:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+    .btn[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
-
   <header class="header">
-    <a href="#" class="logo">ESP32 Hub</a>
+    <a href="#home" class="logo">ESP32 Hub</a>
     <i class='bx bx-menu' id="menu-icon"></i>
     <nav class="navbar">
-      <a href="#home" class="active">Home</a>
-      <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#home">Home</a>
     </nav>
   </header>
 
-  <section class="home" id="home">
+  <section class="home" id="pc-control">
     <div class="home-content">
-      <h3>Welcome to</h3>
-      <h1>@stillyoswa's</h1>
-      <h3><span class="multiple-text"></span> ESP32 Control Hub</h3>
-      <div class="social-media">
-        <a href="https://github.com/fnskye"><i class='bx bxl-github'></i></a>
-        <a href="mailto:timmalogjohnjoshua19@gmail.com"><i class='bx bxs-envelope'></i></a>
-        <a href="https://www.instagram.com/stillyoswa/"><i class='bx bxl-instagram'></i></a>
-      </div>
-      <a href="#projects" class="btn">Explore Projects</a>
+      <h1>Smart PC Power Control</h1>
+      <p>Control your PC remotely using ESP32.</p>
+      <button id="powerBtn" class="btn"><i class='bx bx-power-off'></i> Press Power</button>
+      <button class="btn" disabled><i class='bx bx-refresh'></i> Restart (Coming Soon)</button>
+      <button class="btn" disabled><i class='bx bx-power-off'></i> Shutdown (Coming Soon)</button>
+      <p id="statusMsg"></p>
     </div>
   </section>
-
-  <section class="services" id="projects">
-    <h2 class="heading">My <span>Projects</span></h2>
-    <div class="services-container">
-      <div class="services-box">
-        <i class='bx bx-power-off'></i>
-        <h3>Smart PC Power</h3>
-        <p>Remotely power your PC using an ESP32 + relay module. It simulates a real power button press.</p>
-        <a href="pc.html" class="btn">Launch</a>
-      </div>
-      <div class="services-box">
-        <i class='bx bx-video'></i>
-        <h3>Smart Webcam</h3>
-        <p>Coming soon — control your ESP32-CAM to stream and take photos over Wi-Fi.</p>
-        <a href="#" class="btn">Coming Soon</a>
-      </div>
-      <div class="services-box">
-        <i class='bx bx-bulb'></i>
-        <h3>Smart Lights</h3>
-        <p>RGB lighting controller over local network. Customize scenes and animations.</p>
-        <a href="#" class="btn">Coming Soon</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="about" id="about">
-    <div class="about-content">
-      <h2 class="heading">About <span>Me</span></h2>
-      <h3>ESP32 Developer / Maker</h3>
-      <p>I build smart devices using ESP32 to automate everyday tech. This site is my own interactive dashboard, powered by the same chips I program. Everything here is hosted, run, and controlled from the boards themselves. No cloud. Just brains and bytes.</p>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <h2 class="heading">Contact <span>Me!</span></h2>
-    <form action="#" name="submit-to-google-sheet">
-      <div class="input-box">
-        <input type="text" name="Name" placeholder="Full Name">
-        <input type="email" name="Email Address" placeholder="Email Address">
-      </div>
-      <textarea name="Your Message" cols="30" rows="10" placeholder="Your Message"></textarea>
-      <input type="submit" value="Send Message" class="btn">
-    </form>
-    <span id="msg"></span>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-text">
-      <p>&copy; 2025 by @stillyoswa | All rights reserved.</p>
-    </div>
-    <div class="footer-iconTop">
-      <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
-    </div>
-  </footer>
-
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script>
-    const typed = new Typed(".multiple-text", {
-      strings: ["Smart PC", "Smart Webcam", "Smart Lights", "IoT Magic"],
-      typeSpeed: 100,
-      backSpeed: 100,
-      backDelay: 1000,
-      loop: true
-    });
-  </script>
 
   <script>
-    const form = document.forms['submit-to-google-sheet'];
-    const msg = document.getElementById("msg");
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      fetch("https://script.google.com/macros/s/YOUR-SCRIPT-ID/exec", {
-        method: 'POST',
-        body: new FormData(form)
-      }).then(response => {
-        msg.innerHTML = "Message sent successfully!";
-        setTimeout(() => msg.innerHTML = "", 5000);
-        form.reset();
-      }).catch(error => console.error('Error!', error.message));
+    const statusMsg = document.getElementById("statusMsg");
+    const powerBtn = document.getElementById("powerBtn");
+
+    powerBtn.addEventListener("click", () => {
+      statusMsg.textContent = "Sending command...";
+      fetch("https://0c63-180-191-66-207.ngrok-free.app/trigger", { method: "POST" })
+        .then(response => {
+          if (!response.ok) throw new Error("Failed to send command");
+          return response.text();
+        })
+        .then(result => {
+          statusMsg.textContent = result || "Command sent successfully!";
+        })
+        .catch(err => {
+          statusMsg.textContent = "Error: " + err.message;
+        });
     });
   </script>
 </body>

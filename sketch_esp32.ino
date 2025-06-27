@@ -3,8 +3,8 @@
 #include "LittleFS.h"
 
 // Wi-Fi credentials
-const char* ssid = "{wifi ssid}";
-const char* password = "{wifi password}";
+const char* ssid = "{your wifi ssid}";
+const char* password = "{your wifi password}";
 
 // GPIO setup
 const int relayPin = 18;         // Relay IN (#Active LOW)
@@ -76,8 +76,7 @@ void setup() {
   }
 
   // === Web Routes ===
-  server.on("/", []() { serveFile("/index.html", "text/html"); });
-  server.on("/pc.html", []() { serveFile("/pc.html", "text/html"); });
+  server.on("/index.html", []() { serveFile("/index.html", "text/html"); });
   server.on("/style.css", []() { serveFile("/style.css", "text/css"); });
 
   server.on("/trigger", HTTP_POST, []() {
