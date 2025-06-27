@@ -24,7 +24,7 @@ unsigned long relayStartTime = 0;
 
 WebServer server(80);
 
-// ===== Relay Trigger (1s pulse) =====
+// ===== Relay Trigger =====
 void triggerRelay() {
   Serial.println("Triggering relay...");
   digitalWrite(relayPin, LOW);          // Relay ON
@@ -78,7 +78,6 @@ void setup() {
   // === Web Routes ===
   server.on("/index.html", []() { serveFile("/index.html", "text/html"); });
   server.on("/style.css", []() { serveFile("/style.css", "text/css"); });
-
   server.on("/trigger", HTTP_POST, []() {
     triggerRelay();
     server.sendHeader("Access-Control-Allow-Origin", "*");
