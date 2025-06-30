@@ -86,15 +86,16 @@ However, **WoL typically doesn't work over the internet without complicated setu
 ### Already have a Raspberry Pi?
 
 >
-> If you already own a **Raspberry Pi** and it has an **Ethernet port**, you can use it to **send Wake-on-LAN packets directly to your PC** — even from outside your network — using tools like **Tailscale**, **Ngrok**, or **Raspberry Pi Connect**.  
-> This allows you to **skip the relay-based ESP32 system entirely** if your PC supports WoL.
->
-> ✅ If your Pi meets these requirements:
-> - Has a **LAN port** (for reliable WoL signaling)
-> - Runs **64-bit Raspberry Pi OS Bookworm**
-> - (Optional) Supports **Raspberry Pi Connect** for full desktop access
->
-> Then you can skip straight to the **Wake-on-LAN section** in this guide.
+> If you already own a **Raspberry Pi** and it has an **Ethernet port**, you can use it to **send Wake-on-LAN packets directly to your PC** — even from outside your network by using **Raspberry Pi Connect**.  
+  >
+  > This allows you to **skip the relay-based ESP32 system entirely** if your PC supports WoL.
+  >
+  > ✅ If your Pi meets these requirements:
+  > - Has a **LAN port** (for reliable WoL signaling)
+  > - Runs **64-bit Raspberry Pi OS Bookworm**
+  > - (Optional) Supports **Raspberry Pi Connect** for full desktop access
+  >
+  > Then you can skip straight to the **Wake-on-LAN section** in this guide.
 
 Still, if you’re looking for a **cheap method**, you can:
 - Use **any low-cost Pi** (like Pi Zero, Pi 3, etc.)

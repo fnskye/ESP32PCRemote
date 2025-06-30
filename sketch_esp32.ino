@@ -3,14 +3,14 @@
 #include "LittleFS.h"
 
 // Wi-Fi credentials
-const char* ssid = "{your wifi ssid}";
-const char* password = "{your wifi password}";
+const char* ssid = "Extender-d6056c";
+const char* password = "MRAC4thf";
 
 // GPIO setup
-const int relayPin = 18;         // Relay IN (#Active LOW)
-const int statusLedPin = 5;      // System status LED = ON always
-const int relayLedPin = 4;       // NEW: LED indicator for relay ON
-const int buttonPin = 12;        // Button to GND
+const int relayPin = 18;     // Relay IN (#Active LOW)
+const int statusLedPin = 5;  // System status LED = ON always
+const int relayLedPin = 4;   // NEW: LED indicator for relay ON
+const int buttonPin = 12;    // Button to GND
 
 // Button debounce
 bool lastButtonState = HIGH;
@@ -24,11 +24,11 @@ unsigned long relayStartTime = 0;
 
 WebServer server(80);
 
-// ===== Relay Trigger =====
+// ===== Relay Trigger (1s pulse) =====
 void triggerRelay() {
   Serial.println("Triggering relay...");
-  digitalWrite(relayPin, LOW);          // Relay ON
-  digitalWrite(relayLedPin, HIGH);      // LED ON (active HIGH)
+  digitalWrite(relayPin, LOW);      // Relay ON
+  digitalWrite(relayLedPin, HIGH);  // LED ON (active HIGH)
   relayStartTime = millis();
   relayActive = true;
 }
@@ -50,13 +50,13 @@ void setup() {
   // Pin modes
   pinMode(relayPin, OUTPUT);
   pinMode(statusLedPin, OUTPUT);
-  pinMode(relayLedPin, OUTPUT);      // NEW
+  pinMode(relayLedPin, OUTPUT);  // NEW
   pinMode(buttonPin, INPUT_PULLUP);
 
   // Initial states
-  digitalWrite(relayPin, HIGH);       // Relay OFF
-  digitalWrite(statusLedPin, HIGH);   // System LED ON
-  digitalWrite(relayLedPin, LOW);     // Relay LED OFF
+  digitalWrite(relayPin, HIGH);      // Relay OFF
+  digitalWrite(statusLedPin, HIGH);  // System LED ON
+  digitalWrite(relayLedPin, LOW);    // Relay LED OFF
 
   // Wi-Fi connect
   WiFi.begin(ssid, password);
@@ -76,8 +76,16 @@ void setup() {
   }
 
   // === Web Routes ===
-  server.on("/index.html", []() { serveFile("/index.html", "text/html"); });
-  server.on("/style.css", []() { serveFile("/style.css", "text/css"); });
+  server.on("/", []() {
+    serveFile("/index.html", "text/html");
+  });
+  server.on("/pc.html", []() {
+    serveFile("/pc.html", "text/html");
+  });
+  server.on("/style.css", []() {
+    serveFile("/style.css", "text/css");
+  });
+
   server.on("/trigger", HTTP_POST, []() {
     triggerRelay();
     server.sendHeader("Access-Control-Allow-Origin", "*");
@@ -118,8 +126,8 @@ void loop() {
 
   // Relay auto-release after 1 second
   if (relayActive && millis() - relayStartTime >= 1000) {
-    digitalWrite(relayPin, HIGH);         // Relay OFF
-    digitalWrite(relayLedPin, LOW);       // LED OFF
+    digitalWrite(relayPin, HIGH);    // Relay OFF
+    digitalWrite(relayLedPin, LOW);  // LED OFF
     relayActive = false;
     Serial.println("Relay released.");
   }
