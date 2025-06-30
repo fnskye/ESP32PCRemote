@@ -37,7 +37,7 @@ The instructions and design principles in this repository aim to support both be
 - [Hardware Requirements](#hardware-requirements)
 
   - [Component/Hardware References](#component-references)
-- [Wiring Diagram (Simplified)](#wiring-diagram-simplified)
+- [Hardware Wiring Diagram](#hardware-wiring-diagram)
 - [Web Interface](#web-interface)
 - [Project Structure (In Wokwi)](#project-structure-in-wokwi)
   - [Why Simulate First?](#why-simulate-first)
@@ -83,19 +83,19 @@ There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a P
 
 However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
 
-### Already have a Raspberry Pi?
+### Already Have a Raspberry Pi?
 
->
-> If you already own a **Raspberry Pi** and it has an **Ethernet port**, you can use it to **send Wake-on-LAN packets directly to your PC** — even from outside your network by using **Raspberry Pi Connect**.  
-  >
-  > This allows you to **skip the relay-based ESP32 system entirely** if your PC supports WoL.
-  >
-  > ✅ If your Pi meets these requirements:
-  > - Has a **LAN port** (for reliable WoL signaling)
-  > - Runs **64-bit Raspberry Pi OS Bookworm**
-  > - (Optional) Supports **Raspberry Pi Connect** for full desktop access
-  >
-  > Then you can skip straight to the **Wake-on-LAN section** in this guide.
+If you already own a **Raspberry Pi** with an **Ethernet port**, and your PC supports **Wake-on-LAN (WoL)**, you can use the Pi to **send WoL packets directly to your PC** — even from outside your local network — by using **[Raspberry Pi Connect](https://www.raspberrypi.com/software/)**.
+
+This approach eliminates the need for an ESP32 relay system, offering a simpler and software-based method to remotely power on your PC.
+
+You can use this method if your Raspberry Pi meets the following requirements:
+- Has a **LAN (Ethernet) port** for reliable WoL signaling  
+- Runs **64-bit Raspberry Pi OS (Bookworm)**  
+- (Optional) Supports **Raspberry Pi Connect** for full remote desktop access  
+
+If your setup matches these conditions, you may skip the ESP32 steps and proceed directly to the **Wake-on-LAN section** of this guide.
+
 
 Still, if you’re looking for a **cheap method**, you can:
 - Use **any low-cost Pi** (like Pi Zero, Pi 3, etc.)
@@ -156,29 +156,26 @@ If you are ready to set up secure internet-based access, I've prepared a step-by
 
 ---
 
-## **Wiring Diagram (Simplified)**
+## Web Interface
 
-| ESP32 Pin | Connected To              |
-|-----------|---------------------------|
-| GPIO 18   | Relay IN                  |
-| GPIO 5    | Status LED (through 220Ω) |
-| GPIO 12   | Push Button (to GND)      |
-| GND       | Relay GND + Button GND    |
-| 5V        | Relay VCC (if required)   |
+The project includes a lightweight web interface hosted directly on the **ESP32**, allowing users to remotely control the PC over a **local network** (or globally if paired with tunneling tools like Tailscale or Ngrok).
 
-We will use a Relay **NO (Normally Open)** and **COM** to connect to your PC's power switch header.
+### Available Pages
 
----
+- `/index.html`:  
+  The main **control panel** for the user. This page includes a power button or trigger element that sends a command to activate the relay module connected to the PC's power button.
+  
+- `/style.css`:  
+  A **CSS file** that applies basic styling to the control panel, ensuring a cleaner and more user-friendly appearance.
 
-## **Web Interface**
+### Trigger Endpoint
 
-- Hosted on the ESP32 using LittleFS
-- Pages:
-  - `/pc.html`: control panel
-  - `/style.css`: basic styling
-- Trigger endpoint: `POST /trigger`
+- `POST /trigger`:  
+  This is the **backend endpoint** exposed by the ESP32 server. When the power button is pressed on the control panel, a `POST` request is sent to this endpoint.  
+  Upon receiving the request, the ESP32 activates the relay connected to the PC, simulating a physical press of the power button.
 
----
+This web-based interface provides a simple, intuitive way to power on your PC without physical access — by just using a browser on any device.
+
 
 ## **Project Structure (In Wokwi)**
 
@@ -222,7 +219,7 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ![Initial Testing Diagram #3](assets/Project%20Structure%20%233.jpg)
 
-#### *Figure 3: Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, mimicking a real PC power switch trigger.*
+#### *Figure 3: Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, simulating like a real PC power switch trigger.*
 
 ---
 
@@ -335,7 +332,7 @@ We use LittleFS to upload web interface files to the ESP32.
 - Visit the repo: [arduino-littlefs-upload](https://github.com/earlephilhower/arduino-littlefs-upload)
 - Follow the instructions to install the `LittleFS Uploader` tool.
 - After installing, restart Arduino IDE.
-- You should now see **"ESP32 Sketch Data Upload"** under the **Tools** menu.
+- You should now able to use  **"Upload LittleFS"** by using **crtl + shift + p**.
 
 #### 5. Set the Correct Board and Port
 - Go to **Tools > Board**, and select your ESP32 model (e.g., **ESP32 Dev Module**).
@@ -474,22 +471,69 @@ The project involves connecting several components to the ESP32:
 
 ### Breadboard Layout Diagram
 
-![Breadboard Diagram](assets/Project%20Structure%20#1.jpg)
+We will use a Relay **NO (Normally Open)** and **COM (Common Connection)** to connect to your PC's power switch header.
 
-_(Replace this with your final wiring diagram if updated)_
+These wiring diagrams illustrate how the ESP32, relay module, LEDs, and push button are interconnected to create a smart PC power controller.
 
 ---
 
-### Pin-to-Pin Wiring Table
+### 📘 Diagram 1: Complete Breadboard Setup with ESP32
 
-| ESP32 Pin | Connects To           | Description                         |
-|-----------|------------------------|-------------------------------------|
-| GPIO 18   | Relay IN               | Relay control (Active LOW)          |
-| GPIO 5    | Status LED (+220Ω)     | Indicates system power              |
-| GPIO 4    | Relay LED (+220Ω)      | Lights up when relay is triggered   |
-| GPIO 12   | Push Button (to GND)   | Manual trigger                      |
-| GND       | Relay GND, Button GND, LED GND | Common ground for all components |
-| 3.3V/5V   | Relay VCC, LED VCC     | Depending on component requirement  |
+![Breadboard Diagram](assets\wiring_diagram_1.png)
+
+This diagram shows the full prototype setup including the ESP32, status indicators, push button, and relay wiring.
+
+#### Key Connections:
+- **ESP32 Microcontroller:**
+  - **GPIO 18** → Connected to **relay IN** (controls the relay).
+  - **GPIO 5** → Connected to a **status LED** (indicates relay activation).
+  - **GPIO 4** → Connected to a **push button** (used for manual testing).
+  - **GPIO 12** → Can be reserved for future input/output or LED control.
+- **LED Indicators:**
+  - Connected in series with **220Ω resistors** to limit current.
+  - Used to visually show relay activation and system status.
+- **Push Button:**
+  - Used to simulate manual triggering of the relay.
+  - Connected with a **10kΩ pull-down resistor** to avoid floating pin states.
+- **Relay Module:**
+  - Connected in the same way as in Diagram 1, controlled via **GPIO 18**.
+
+#### Power System:
+- All components share a **common GND** and **5V rail** sourced from the ESP32's onboard regulator or an external power supply.
+- The breadboard serves as a prototyping platform for testing before deploying to a PCB or enclosure.
+
+---
+
+### 📘 Diagram 2: Relay-to-PC Power Switch Connection
+
+![Relay Module Diagram](assets\wiring_diagram_2.png)
+
+This diagram shows how the relay module interfaces with the PC’s physical power switch.
+
+#### Key Points:
+- **Relay Module:**
+  - **IN** pin is connected to **GPIO 18** of the ESP32 **through two 10kΩ resistors**.
+    - These resistors act as a **voltage divider** or **current limiter**, protecting both the relay input and the ESP32 GPIO pin from potential overcurrent or noise.
+    - This also helps ensure a **clean LOW signal** to reliably trigger the relay, especially in noisy environments.
+  - **VCC** is powered via the ESP32’s **5V supply rail**.
+  - **GND** is connected to the shared ground system.
+- **COM (Common)** and **NO (Normally Open)** pins on the relay are connected to the two wires from the **PC power SW header**.
+  - When the relay is triggered (i.e., GPIO 18 goes LOW), it temporarily closes the circuit, simulating a press of the power button.
+
+This setup enables the ESP32 to power on the PC by briefly closing the connection between the power switch pins on the motherboard.
+
+---
+
+### 🔢 Pin-to-Pin Wiring Table
+
+| ESP32 Pin | Connects To                    | Description                          |
+|-----------|--------------------------------|--------------------------------------|
+| GPIO 18   | Relay IN (via 2 × 10kΩ resistors) | Relay control (Active LOW, protected) |
+| GPIO 5    | Status LED (+220Ω)             | Indicates system power               |
+| GPIO 4    | Relay LED (+220Ω)              | Lights up when relay is triggered    |
+| GPIO 12   | Push Button (to GND)           | Manual trigger input                 |
+| GND       | Relay GND, Button GND, LED GND | Common ground for all components     |
+| 3.3V/5V   | Relay VCC, LED VCC             | Power supply (depending on need)     |
 
 > 💡 Use **pull-down resistor (10kΩ)** for the push button if needed for stability  
 > 🧪 Add a **diode** across the relay coil (if mechanical) to avoid back EMF (optional but recommended)
