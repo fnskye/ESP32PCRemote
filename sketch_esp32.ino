@@ -3,8 +3,8 @@
 #include "LittleFS.h"
 
 // Wi-Fi credentials
-const char* ssid = "Extender-d6056c";
-const char* password = "MRAC4thf";
+const char* ssid = "{Your Wi-fi SSID}";
+const char* password = "{Your Wi-Fi Password}";
 
 // GPIO setup
 const int relayPin = 18;     // Relay IN (#Active LOW)
