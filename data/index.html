@@ -27,10 +27,10 @@
         <button id="powerBtn" class="btn" aria-label="Power on PC">
           <i class='bx bx-power-off'></i> Press Power
         </button>
-        <button class="btn" disabled>
+        <button class="btn" disabled title="Coming Soon">
           <i class='bx bx-refresh'></i> Restart (Coming Soon)
         </button>
-        <button class="btn" disabled>
+        <button class="btn" disabled title="Coming Soon">
           <i class='bx bx-power-off'></i> Shutdown (Coming Soon)
         </button>
       </div>
@@ -49,7 +49,7 @@
     async function sendCommand(endpoint) {
       statusMsg.textContent = "Sending command...";
       try {
-        const response = await fetch(`http://192.168.254.153/${endpoint}`, {
+        const response = await fetch(`/${endpoint}`, {
           method: "POST"
         });
 

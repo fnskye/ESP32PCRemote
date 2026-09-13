@@ -3,8 +3,8 @@
 #include "LittleFS.h"
 
 // Wi-Fi credentials
-const char* ssid = "{Your Wi-fi SSID}";
-const char* password = "{Your Wi-Fi Password}";
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
 
 // GPIO setup
 const int relayPin = 18;     // Relay IN (#Active LOW)

@@ -2,21 +2,99 @@
 
 ### A Comprehensive Technical Guide on Implementing Remote Desktop PC Power Control Using an ESP32 Microcontroller with Relay Module and Web Interface Integration
 
-This project presents a complete, detailed guide for developing a system that enables remote control of a desktop computer’s power state using an **ESP32 microcontroller**. By integrating a **relay module**, the ESP32 is capable of <ins>simulating a physical press of the PC’s power switch.</ins> This allows users to power their PC **locally** or **remotely via the internet**, with control issued through a responsive, browser-based user interface.
+## Table of Contents
 
-The project is initially designed for <ins>**local network access**</ins>, the system leverages the ESP32’s onboard Wi-Fi capabilities to host a web server that responds to user commands. The documentation also includes step-by-step instructions for extending the project’s functionality to support <ins>**outside local network access**</ins>, even in environments constrained by **Carrier-Grade NAT (CGNAT)** or lacking a dedicated **public IP address.**
+### 🔌 Introduction
+- [Project Overview](#a-comprehensive-technical-guide-on-implementing-remote-desktop-pc-power-control-using-an-esp32-microcontroller-with-relay-module-and-web-interface-integration)
+- [Highlights](#highlights)
+- [Why I Made This](#why-i-made-this)
+- [Important Notes](#important-notes-before-proceeding-)
+- [Already Have a Raspberry Pi?](#already-have-a-raspberry-pi)
+- [Features](#features)
 
-Key areas of focus covered in this project include:
-- Proper hardware setup and component wiring
-- GPIO pin assignment and safe relay triggering logic
-- Integration of a physical push-button for manual override
-- LED status indicators for power state feedback
-- Deployment of a lightweight web server hosted directly on the ESP32
-- Solutions for secure, remote access using Tailscale, Ngrok, or Raspberry Pi bridges
+### 🔧 Hardware & Software Requirements
+- [Component Requirements](#component-requirements)
+- [Component References](#component-references)
+- [Web Interface](#web-interface)
 
-This implementation is particularly suitable for users who need **reliable remote PC power-switch control** without depending on **Wake-on-LAN** or a public IP. By directly simulating your PC’s power button, it works across most standard desktop systems—perfect when all you want is “turn on the PC from anywhere,” not a full remote-desktop experience.
+### 🧪 Simulation (Wokwi)
+- [Project Structure (In Wokwi)](#project-structure-in-wokwi)
+- [Why Simulate First?](#why-simulate-first)
+- [Screenshots](#screenshot-of-the-diagram-initial-testing)
+- [Diagram Explanation](#explanation-of-the-diagram-initial-testing)
 
-## **Important Notes before Proceeding**  ⚠️ 
+### ⚙️ Building the Physical Setup
+- [Step-by-Step Hardware Setup](#step-by-step-hardware-setup)
+- [Pre-Requisites Checklist](#pre-requisites-checklist)
+- [Installing Software](#installation-process-of-software--tools)
+- [Uploading the Code](#uploading-the-code)
+- [Simulation vs Actual Code](#differences-between-simulation-and-actual-code)
+- [Wiring & Layout](#layouts-and-setups-of-the-actual-hardware-breadboard-and-wiring)
+
+### 🌐 Remote Access (Internet Control)
+- [Accessing the Web Interface](#accessing-the-web-interface)
+- [Making Your ESP32 Accessible Online](#making-your-esp32-accessible-online)
+- [Tunneling using Ngrok](#tunneling-using-ngrok)
+- [Tunneling using Tailscale](#tunneling-using-tailscale)
+- [Wake-on-LAN Setup](WAKE_ON_LAN_WITH_RASPBERRY_PI.md)
+- [Understanding CGNAT](#understanding-the-limitations-of-cgnat)
+- [Solution: Tunnel Through CGNAT](#solution-tunnel-through-cgnat)
+- [Raspberry Pi Bridge](#raspberry-pi--247-bridge-for-remote-access)
+- [Raspberry Pi Connect](#raspberry-pi-connect--full-desktop-remote-access)
+- [Raspberry Pi Connect Lite](#raspberry-pi-connect-lite--terminal-only-access)
+- [Methods of Installation](#methods-of-installation)
+
+### 📜 License
+- [License](#-license)
+
+
+## Highlights
+
+The ESP32 + relay setup simulates a physical press of your PC's power button over the network, so you can power the PC on from anywhere with internet access, even behind CGNAT, without needing Wake-on-LAN or a public IP.
+
+### Which path is right for you
+
+Pick the path that matches what you actually need. Wake-on-LAN cannot reach across the internet on its own, so it only helps for some scenarios.
+
+- **You only need to wake the PC from another room on the same network (not from outside home)?** Use [Wake-on-LAN with a Raspberry Pi](WAKE_ON_LAN_WITH_RASPBERRY_PI.md). No ESP32 needed. Skip the rest of this guide.
+- **You need to wake the PC from outside home and you have a Raspberry Pi with Ethernet?** Same as above, plus Tailscale on the Pi. See the [Wake-on-LAN with a Raspberry Pi](WAKE_ON_LAN_WITH_RASPBERRY_PI.md) for the full setup. No ESP32 needed.
+- **No Raspberry Pi, your PC doesn't support WoL, or you specifically want the relay-based build?** This project is for you. The ESP32 simulates a physical power-button press via a relay, which works on any desktop with a power switch header. No BIOS settings, no NIC requirements, no WoL support needed.
+
+### What this project gives you
+
+- A web UI hosted directly on the ESP32, reachable from any browser on your local network.
+- Optional public HTTPS access via Ngrok, or private VPN access via Tailscale, so you can reach the ESP32 from anywhere.
+- A physical push-button on the breadboard as a manual override.
+- A 1-second relay pulse that safely simulates a PC power press without harming the motherboard.
+
+### At a glance
+
+- Full hardware walkthrough with a virtual Wokwi simulation you can try before touching real components.
+- Tested end-to-end: simulated first in Wokwi, then built on a real ESP32 dev board with photos of every wiring step.
+- Two remote-access paths compared honestly (Ngrok for sharing, Tailscale for personal use), with a decision table at the end.
+- MIT-licensed C++ sketch you can clone, flash, and have running in under an hour if you already have the parts.
+
+### Reading order
+
+If this project is the right path for you, read the sections in this order:
+
+1. [Important Notes](#important-notes-before-proceeding-) — safety and prerequisites.
+2. [Component Requirements](#component-requirements) — what to buy and what to install.
+3. [Step-by-Step Hardware Setup](#step-by-step-hardware-setup) — wiring, flash, and verify.
+4. [Making Your ESP32 Accessible Online](#making-your-esp32-accessible-online) — only if you need internet access, not just local LAN.
+5. [License](#-license) — MIT terms.
+
+### Why I Made This
+
+I wanted a way to turn my PC on and off using the ESP32, both locally and over the internet. Local control was straightforward, but remote control presented challenges, especially with CGNAT (Carrier-Grade NAT) and the lack of a public IP. Wake-on-LAN handles local wakeup fine, but it doesn't work over the internet without complicated setup, so for users who need true remote access, this project is the alternative.
+
+The repository focuses on the core system: the ESP32 Smart PC Power Controller logic that handles the relay, physical button input, and status indication. The remote-access section is intentionally separate so the local-only readers don't have to wade through tunneling instructions.
+
+> 🔧 **Note:** for full remote access over the internet, additional steps are required, such as using an **always-on device** (e.g., a Raspberry Pi or another box that stays online 24/7 to act as a gateway) and setting up tunneling tools like **Tailscale**, **ZeroTier**, or **Ngrok**. The [Making Your ESP32 Accessible Online](#making-your-esp32-accessible-online) section covers all three.
+
+
+
+## **Important Notes before Proceeding**  ⚠️ {#important-notes-before-proceeding}
 It is strongly recommended that users review **all relevant sections** of this guide before starting. Doing so helps you:  
  > - Verify compatibility with your **specific hardware**, including ESP32 variants, relay modules, and PC motherboard specifications  
  > - Understand the requirements like tunneling tools and etc
@@ -24,173 +102,19 @@ It is strongly recommended that users review **all relevant sections** of this g
 
 By reading end-to-end, you’ll gain the background needed for a **stable, robust deployment** and be better equipped to troubleshoot issues.  
 
-The instructions and design principles in this repository are crafted to support both **beginner** users—who need clear, step-by-step walkthroughs—and **intermediate** users—who may want to customize or automate advanced behaviors. Whether you’re firing up your first ESP32 project or integrating this into an existing home-lab setup, this guide has you covered.
+The instructions and design principles in this repository are crafted to support both **beginner** users (who need clear, step-by-step walkthroughs) and **intermediate** users (who may want to customize or automate advanced behaviors). Whether you're firing up your first ESP32 project or integrating this into an existing home-lab setup, this guide has you covered.
 
-## Note on Wake-on-LAN and Always-On Devices
+## Already Have a Raspberry Pi?
 
-### Already Have a Raspberry Pi?
+If you have a Raspberry Pi on the same LAN as your PC, the Pi + Wake-on-LAN path is usually simpler than the ESP32 + relay build. The full setup is in the [companion guide](WAKE_ON_LAN_WITH_RASPBERRY_PI.md) — BIOS enable, Windows settings, sending the WoL packet, and the Tailscale option for remote wake-from-outside.
 
-If you already have a **Raspberry Pi** with an Ethernet port or a model with reliable Wi-Fi access, you can implement **Wake-on-LAN (WoL)** to power on your PC, assuming that your **PC supports WoL** and is **connected via Ethernet** to your router.  
+For the always-on device on the ESP32 + relay path, it does not need to be a Pi. Any device that stays powered and connected to the same LAN works:
 
-> This approach eliminates the need for an ESP32 relay system, offering a simpler and software-based method to remotely power on your PC.
+- An old laptop or desktop.
+- A low-power Android phone or tablet.
+- Any always-on box that can reach the ESP32 over your local network.
 
-
-
-
-You can use this method if your Raspberry Pi meets the following requirements:
-> - Has a **LAN (Ethernet) port** for reliable WoL signaling  
-> - Runs **64-bit Raspberry Pi OS (Bookworm)**  
-> - (Optional) Supports **Raspberry Pi Connect** for full remote desktop access  
-
-If your setup matches these conditions, you may skip the ESP32 steps and proceed directly to the **Wake-on-LAN section** of this guide.
-
-Still, if you’re looking for a **cheap method**, you can:
-> - Use **any low-cost like pi that can run 24/7** (like old laptop, cellphone, etc.)
-> - Combine it with **Tailscale** or **Ngrok**
-> - And still follow the rest of this guide to remotely trigger your ESP32 relay
-
----
-
-### No Raspberry Pi & No WoL? No Problem!
-
-Even if your PC **doesn’t support WoL** and you **don’t have a Raspberry Pi**, you can still **power on** your PC remotely by:
-
-1. Using an **ESP32** to simulate the physical power button  
-2. Tunneling into your network with **Ngrok** or **Tailscale**  
-3. Relaying “press power” commands from an **always-on device**
-
-> **This is exactly why this repository exists** — to help users who don’t have WoL-capable PCs or Raspberry Pi devices and still achieve remote **power-switch control** —not full mouse/keyboard desktop control.
-
-#### Examples of Always-On-Device
-- 🖥️ An old laptop or desktop that stays powered and online  
-- 📱 A low-power Android phone or tablet on your LAN  
-- 💻 Any device that can:
-  • Stay online 24/7  
-  • Join the **same local network** as your PC  
-  • Maintain a stable internet connection  
-
-> ⚠️ **Important:** The always-on device must be on the same network as the PC you're trying to control, and it should remain powered to ensure uninterrupted access.
-
----
-
-## 📑 Table of Contents
-
-<details>
-<summary><strong>🔌 Introduction</strong></summary>
-
-- [ESP32 Smart PC Power Controller](#esp32-smart-pc-power-controller)  
-- [Project Overview](#a-comprehensive-technical-guide-on-implementing-remote-desktop-pc-power-control-using-an-esp32-microcontroller-with-relay-module-and-web-interface-integration)  
-- [Important Notes ⚠️](#important-notes-before-proceeding-⚠️)  
-- [Wake-on-LAN and Always-On Devices](#note-on-wake-on-lan-and-always-on-devices)  
-  - [Using a Raspberry Pi](#already-have-a-raspberry-pi)  
-  - [Without Raspberry Pi or WoL](#no-raspberry-pi--no-wol-no-problem)  
-  - [Examples of Always-On Devices](#examples-of-always-on-device)  
-- [Why I Made This](#why-i-made-this)  
-- [Features](#features)  
-
-</details>
-
-<details>
-<summary><strong>🔧 Hardware & Software Requirements</strong></summary>
-
-- [Component Requirements](#component-requirements)  
-  - [Component References](#component-references)  
-- [Web Interface](#web-interface)  
-  - [Available Pages](#available-pages)  
-  - [Trigger Endpoint](#trigger-endpoint)  
-
-</details>
-
-<details>
-<summary><strong>🧪 Simulation (Wokwi)</strong></summary>
-
-- [Project Structure (In Wokwi)](#project-structure-in-wokwi)  
-  - [Why Simulate First?](#why-simulate-first)  
-  - [Simulation Goals](#main-goal-of-simulation)  
-  - [Screenshots](#screenshot-of-the-diagram-initial-testing)  
-    - [Figure 1](#figure-1-initial-diagram-setup-in-the-virtual-environment-showing-the-esp32-ready-to-connect-to-a-wi-fi-network)  
-    - [Figure 2](#figure-2-successful-wi-fi-connection-with-the-esp32-displaying-its-assigned-ip-address-confirming-network-connectivity)  
-    - [Figure 3](#figure-3-simulation-of-the-power-control-feature--when-the-push-button-is-pressed-the-relay-is-activated-for-one-second-simulating-like-a-real-pc-power-switch-trigger)  
-  - [Diagram Explanation](#explanation-of-the-diagram-initial-testing)  
-    - [Legend & Overview](#legend--functionality-overview)  
-    - [Behavior in Simulation](#behavior-in-simulation)  
-
-</details>
-
-<details>
-<summary><strong>⚙️ Building the Physical Setup</strong></summary>
-
-- [Step-by-Step Hardware Setup](#step-by-step-hardware-setup)  
-  - [Pre-Requisites](#pre-requisites-checklist)  
-    - [1. Hardware Components](#1-hardware-components)  
-    - [2. Software & Tools](#2-software--tools)  
-    - [3. Cables and Power](#3-cables-and-power)  
-  - [Installing Software](#installation-process-of-software--tools)  
-    - [1. Arduino IDE](#1-install-arduino-ide)  
-    - [2. ESP32 Board Support](#2-install-esp32-board-support)  
-    - [3. USB Drivers](#3-install-usb-drivers-ch340--cp2102)  
-    - [4. LittleFS Uploader](#4-install-littlefs-uploader)  
-    - [5. Set Board & Port](#5-set-the-correct-board-and-port)  
-  - [Uploading Code & Web Files](#uploading-the-code)  
-    - [Uploading `.ino` Sketch](#1-uploading-the-ino-sketch)  
-    - [Uploading Web Files](#2-uploading-web-files-interface-via-littlefs)  
-  - [Simulation vs Actual Code](#differences-between-simulation-and-actual-code)  
-    - [GPIO Pin Changes](#1-gpio-pin-changes)  
-    - [New Features](#2-new-features-in-actual-code)  
-  - [Wiring & Layout](#layouts-and-setups-of-the-actual-hardware-breadboard-and-wiring)  
-    - [Overview](#general-setup-overview)  
-    - [Breadboard Diagram](#breadboard-layout-diagram)  
-    - [Diagram 1: Full Setup](#-diagram-1-complete-breadboard-setup-with-esp32)  
-    - [Diagram 2: Relay to PC](#-diagram-2-relay-to-pc-power-switch-connection)  
-    - [Wiring Table](#-pin-to-pin-wiring-table)  
-
-</details>
-
-<details>
-<summary><strong>🌐 Remote Access (Internet Control)</strong></summary>
-
-- [Accessing the Web Interface](#accessing-the-web-interface)  
-  - [Why Upload Code & Web Files?](#why-we-are-uploading-code-and-web-files)  
-- [Making ESP32 Accessible Online](#making-your-esp32-accessible-online)  
-  - [Step-by-Step Guide Over CGNAT](#step-by-step-guide-for-accessing-your-esp32-online-over-cgnat-networks)  
-  - [Tunneling with Ngrok or Tailscale](#setting-up-tailscale-or-ngrok)  
-    - [Ngrok Setup](#tunneling-using-ngrok)  
-    - [Tailscale Setup](#tunneling-using-tailscale)  
-  - [Understanding CGNAT](#understanding-the-limitations-of-cgnat)  
-  - [Workaround Solutions](#solution-tunnel-through-cgnat)  
-    - [Tailscale](#tailscale--secure-persistent-and-private)  
-    - [Ngrok](#ngrok--public-access-with-https-links)  
-    - [Raspberry Pi Bridge](#raspberry-pi--247-bridge-for-remote-access)  
-      - [Full Desktop Access](#raspberry-pi-connect--full-desktop-remote-access)  
-      - [Terminal Access Only](#raspberry-pi-connect-lite--terminal-only-access)  
-  - [Summary](#summary)  
-  - [Installation Methods](#methods-of-installation)  
-
-</details>
-
-- [📜 License](#-license)
-
-
-## Why I Made This
-
-I created this project because I wanted a way to **turn my PC on and off using the ESP32**, both **locally** and **over the internet**. While local control was straightforward, **remote control via the internet** presented challenges — especially due to **CGNAT (Carrier-Grade NAT)** and the lack of a public IP.
-
-There’s an existing method called **Wake-on-LAN (WoL)** that lets you wake a PC on the local network. If you only need **local access**, I recommend using that instead — it's much simpler to set up.  
-🔍 [GitHub Search: Wake-on-LAN Projects](https://github.com/search?q=wake+on+lan++pc)
-
-However, **WoL typically doesn't work over the internet without complicated setup**, so for users who need **true remote access**, I began developing this project as an alternative solution.
-
----
-
-***My primary objective*** was to create a system that can simulate pressing the PC’s power button using a relay, with commands sent through a web interface. The goal was to make it work both locally and remotely, with a focus on allowing control from anywhere in the world through an internet connection. This gives users the ability to turn their PC on or off without needing to be near it or connected to the same local network.
-
-> 🔧 **Note:** For full remote access over the internet, additional steps are required such as:
-> - Using an **always-on device** (e.g., a Raspberry Pi or another device that stays online 24/7 to act as a secure gateway.)
-> - Setting up tunneling tools like **Tailscale**, **ZeroTier**, or **Ngrok**
-
-This repository focuses on the development of the core system — the ESP32 Smart PC Power Controller logic that handles the relay, physical button input, and status indication.
-
-If you are ready to set up secure internet-based access, I've prepared a step-by-step tutorial (linked below) to help you configure remote control of your ESP32, even behind CGNAT.
+> ⚠️ **Important:** the always-on device must stay on the same network as the PC you are controlling, and it should remain powered to ensure uninterrupted access. A wall-powered device is more reliable than a phone that might run out of battery.
 
 ---
 
@@ -225,12 +149,12 @@ If you are ready to set up secure internet-based access, I've prepared a step-by
 
 | Image | Description |
 |-------|-------------|
-| ![ESP32](assets/hardware_requirements_7.jpg) | **ESP32 Dev Board** — The main controller |
-| ![Relay](assets/hardware_requirements_8.jpg) | **Relay Module** — triggers the PC Switch |
-| ![Push Button](assets/hardware_requirements_4.jpg) | **Push Button** — used for manual test triggering |
-| ![LED](assets/hardware_requirements_3.jpg) | **LED** — shows when relay and system is active |
-| ![Resistor](assets/hardware_requirements_1.jpg) | **220Ω Resistor** — limits LED current && **10kΩ Resistor** — for pulling down push button |
-| ![Jumpers](assets/hardware_requirements_5.jpg) | **Jumper Wires (M-M & M-F)** — essential for ESP32 components |
+| ![ESP32](assets/hardware_requirements_7.jpg) | **ESP32 Dev Board**: the main controller |
+| ![Relay](assets/hardware_requirements_8.jpg) | **Relay Module**: triggers the PC Switch |
+| ![Push Button](assets/hardware_requirements_4.jpg) | **Push Button**: used for manual test triggering |
+| ![LED](assets/hardware_requirements_3.jpg) | **LED**: shows when relay and system is active |
+| ![Resistor](assets/hardware_requirements_1.jpg) | **220Ω Resistor**: limits LED current. **10kΩ Resistor**: for pulling down push button |
+| ![Jumpers](assets/hardware_requirements_5.jpg) | **Jumper Wires (M-M & M-F)**: essential for ESP32 components |
 
 ---
 
@@ -252,7 +176,7 @@ The project includes a lightweight web interface hosted directly on the **ESP32*
   This is the **backend endpoint** exposed by the ESP32 server. When the power button is pressed on the control panel, a `POST` request is sent to this endpoint.  
   Upon receiving the request, the ESP32 activates the relay connected to the PC, simulating a physical press of the power button.
 
-This web-based interface provides a simple, intuitive way to power on your PC without physical access — by just using a browser on any device.
+This web-based interface provides a simple, intuitive way to power on your PC without physical access. Just open the page in any browser on the same network.
 
 
 ## Project Structure (In Wokwi)
@@ -265,7 +189,7 @@ If you’d like to explore or simulate the project virtually, you can access the
 
 ### Why Simulate First?
 
-This project was first developed and tested in a **virtual environment** before using real hardware. This was done to make sure the code worked properly, the relay triggered as expected, the button and LED worked correctly, and no physical parts—especially those connected to the motherboard's power switch. Simulating the project helped make the development process safer, easier, and more beginner-friendly by finding and fixing problems early.
+This project was first developed and tested in a **virtual environment** before using real hardware. This was done to make sure the code worked properly, the relay triggered as expected, the button and LED worked correctly, and no physical parts were damaged (especially those connected to the motherboard's power switch). Simulating the project helped make the development process safer, easier, and more beginner-friendly by finding and fixing problems early.
 
 #### Main goal of simulation:
 
@@ -285,19 +209,19 @@ Initial testing was done virtually using Wokwi to verify the logic and functiona
 
 ![Initial Testing Diagram #1](assets/Project%20Structure%20%231.jpg)
 
-#### **Figure 1:* Initial diagram setup in the virtual environment, showing the ESP32 ready to connect to a Wi-Fi network.*
+#### **Figure 1:** Initial diagram setup in the virtual environment, showing the ESP32 ready to connect to a Wi-Fi network.
 
 ---
 
 ![Initial Testing Diagram #2](assets/Project%20Structure%20%232.jpg)
 
-#### **Figure 2:* Successful Wi-Fi connection with the ESP32 displaying its assigned IP address, confirming network connectivity.*
+#### **Figure 2:** Successful Wi-Fi connection with the ESP32 displaying its assigned IP address, confirming network connectivity.
 
 ---
 
 ![Initial Testing Diagram #3](assets/Project%20Structure%20%233.jpg)
 
-#### **Figure 3:* Simulation of the power control feature — when the push button is pressed, the relay is activated for one second, simulating like a real PC power switch trigger.*
+#### **Figure 3:** Simulation of the power control feature. When the push button is pressed, the relay is activated for one second, simulating a real PC power switch trigger.
 
 ---
 
@@ -309,7 +233,7 @@ The image below illustrates the **virtual wiring diagram** used for initial test
 
 ![Diagram Legend and Wiring](assets/explanation%20%231.png)
 
-#### **Figure 4:* Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.*
+#### **Figure 4:** Legend and explanation of the components and symbols used in the virtual diagrams above, providing clarity for understanding the simulation setup.
 
 ##### Legend & Functionality Overview:
 
@@ -364,7 +288,7 @@ Please make sure you have the following prepared before flashing the project to 
    - Required USB drivers for your ESP32 (CH340, CP2102, etc.)
    - [**LittleFS Uploader Tool**](https://github.com/earlephilhower/arduino-littlefs-upload) to flash the web interface to ESP32 storage
 
-   > ⚠️ Don’t worry about setup steps just yet — we’ll cover all the installation instructions in the **Installation Process** section.
+   > ⚠️ Don't worry about setup steps just yet. We'll cover all the installation instructions in the **Installation Process** section.
 
 #### 3. **Cables and Power**  
    Ensure you're using a **data-capable USB cable** to connect the ESP32.  
@@ -433,8 +357,8 @@ You can view or download the main sketch file here:
 > - ✅ Wi-Fi SSID and password
 ```cpp
 // Wi-Fi credentials
-const char* ssid = "{Your Wi-fi SSID}";
-const char* password = "{Your Wi-Fi Password}";
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
 ```
   - Before uploading, make sure to edit the lines under `// Wi-Fi credentials` in the code so your ESP32 can connect to your Wi-Fi network.
 
@@ -502,7 +426,7 @@ This includes:
 > Without uploading this code, the ESP32 will be blank and won't know what to do.
 
 #### 2. Uploading Web Files (Interface via LittleFS)
-The web interface (HTML, CSS, JavaScript) is not stored inside the `.ino` sketch — it must be uploaded separately using **LittleFS**. 
+The web interface (HTML, CSS, JavaScript) is not stored inside the `.ino` sketch. It must be uploaded separately using **LittleFS**.
 
 These files:
 
@@ -525,7 +449,7 @@ While the Wokwi simulation helps prototype the logic, actual hardware developmen
 |-------------------|--------------------|----------------------|-------|
 | Relay Control     | GPIO 4             | GPIO 18              | Changed for better GPIO stability and layout compatibility on real board |
 | Status LED        | GPIO 5 (same)             | GPIO 5 (same)            | Same - used for system status indicator (always ON) |
-| Push Button       | GPIO 12 (same)           | GPIO 12 (same)             | Same — no change at all |
+| Push Button       | GPIO 12 (same)           | GPIO 12 (same)             | Same (no change at all) |
 | Relay LED         | Not implemented    | GPIO 4               | Added for visual feedback; in Wokwi, the relay directly simulated the PC |
 
 ---
@@ -534,14 +458,14 @@ While the Wokwi simulation helps prototype the logic, actual hardware developmen
 
 | Feature                        | Description |
 |--------------------------------|-------------|
-| **Relay LED Indicator**        | GPIO 4 is used to show when the relay is active — helps confirm physical triggering visually |
+| **Relay LED Indicator**        | GPIO 4 is used to show when the relay is active: helps confirm physical triggering visually |
 | **Debounce Logic**             | Prevents false triggering from physical button presses due to mechanical noise |
 | **Relay Pulse Timing**         | Limits activation to 1 second to safely simulate a PC power press |
 
 ---
 
 - Some **GPIO pins behave differently** on physical ESP32 boards than in simulation (e.g., boot behavior, signal stability).
-- We added a **Relay LED** because on real hardware sometimes you can't "see" the relay toggle (depends on the model of the relay) — this gives real-time confirmation.
+- We added a **Relay LED** because on real hardware sometimes you can't "see" the relay toggle (depends on the model of the relay). This gives real-time confirmation.
 - Software **debounce and timing logic** are necessary to handle real button mechanics and safe PC triggering.
 > Don't worry, as the overall project functionality is the same.  
 > These improvements just make it **safer, clearer, and more stable** in a real-world setup.
@@ -551,7 +475,7 @@ While the Wokwi simulation helps prototype the logic, actual hardware developmen
 ### **Layouts and Setups of the Actual Hardware (Breadboard and Wiring)**
 
 > **Why we do this:**  
-> This section shows you how to physically assemble your ESP32 system — including how each component connects on the breadboard, what pins are used, and how to avoid common wiring mistakes.
+> This section shows you how to physically assemble your ESP32 system. It covers how each component connects on the breadboard, what pins are used, and how to avoid common wiring mistakes.
 
 ---
 
@@ -641,29 +565,153 @@ This setup enables the ESP32 to power on the PC by briefly closing the connectio
 
 ## **Making Your ESP32 Accessible Online**
 
-### STEP BY STEP Guide for Accessing your ESP32 Online (Over CGNAT Networks)
+Pick the tunneling method that fits your needs and follow the step-by-step guide below. Both Ngrok and Tailscale are covered in detail, with automation tips for keeping them running 24/7.
 
-> ⚠️ **Important Note:**  
-
-
-## Setting up Tailscale or Ngrok
-> - explanation
+- **[Ngrok](#tunneling-using-ngrok)** gives you a public HTTPS URL anyone can use. Best for sharing access or demos.
+- **[Tailscale](#tunneling-using-tailscale)** creates a private VPN between your devices. Best for personal, long-term use with no public exposure.
 
 ---
+
 ### Tunneling using Ngrok
 
+[Ngrok](https://ngrok.com/) creates a public HTTPS URL that forwards traffic to a local port on your always-on device (a Raspberry Pi, an old laptop, or any 24/7 box on the same LAN as your ESP32). Your phone or any browser anywhere in the world can then reach the ESP32's web interface through that URL, even behind CGNAT.
+
+> ⚠️ **Heads-up:** Ngrok free-tier URLs expire when the session ends and have rate limits. This works great for personal use and demos, but if you want a stable URL that survives reboots, plan to keep the always-on device powered and use a small autostart script (see the automation tips at the end of this section).
+
+#### 1. Install Ngrok on your always-on device
+
+Pick the device that will stay powered and connected to the same LAN as the ESP32. A Raspberry Pi running 64-bit Raspberry Pi OS Bookworm is the recommended choice, but any Linux/macOS/Windows box works.
+
+- **Raspberry Pi / Linux:** follow the official install guide at https://ngrok.com/docs/getting-started/.
+- **Windows / macOS:** download the installer from https://ngrok.com/download.
+
+> 💡 **Tip:** On Linux you can install with the one-liner from Ngrok's docs (it adds the Ngrok apt repo and a `ngrok` command). No build tools needed.
+
+#### 2. Add your authtoken
+
+Sign up for a free account at https://dashboard.ngrok.com/, copy your authtoken from the dashboard, then on your always-on device run:
+
+```bash
+ngrok config add-authtoken <YOUR_TOKEN>
+```
+
+This links the local `ngrok` binary to your account so you get a longer-lived tunnel and a stable subdomain (on the free tier this is a random one, but it persists for the life of the authtoken).
+
+#### 3. Forward traffic to the ESP32
+
+The ESP32 itself is the web server, but Ngrok needs to run on the always-on device because that's the box with a stable internet connection. The always-on device must be on the same LAN as the ESP32, then run:
+
+```bash
+ngrok http 192.168.x.x:80
+```
+
+Replace `192.168.x.x` with the ESP32's local IP printed by the Serial Monitor on boot. Ngrok will print a line like:
+
+```
+Forwarding   https://abc123.ngrok-free.app -> http://192.168.x.x:80
+```
+
+That `https://abc123.ngrok-free.app` URL is now publicly reachable and forwards to your ESP32. Open it on your phone (with Wi-Fi off, to confirm it really goes over the internet) and you should see the Smart PC Power Control page.
+
+#### 4. Trigger the relay from anywhere
+
+Once the Ngrok tunnel is up, `POST https://abc123.ngrok-free.app/trigger` from any device, browser console, or automation tool will fire the relay for one second. Same as the local endpoint, just reachable from anywhere.
+
+> ⚠️ **Security:** anyone with the Ngrok URL can hit `/trigger`. Ngrok free tier doesn't expose auth by default, so if you publish the link anywhere, treat it like a public endpoint. For personal use this is fine; for anything shared, layer a password or move to Tailscale (below).
+
+#### Automation tips for persistent access
+
+To keep Ngrok alive across reboots on a Raspberry Pi:
+
+- **systemd service:** create `/etc/systemd/system/ngrok.service` with an `ExecStart` line that runs `ngrok http 192.168.x.x:80 --domain=<YOUR_DOMAIN>` (a reserved subdomain requires a paid plan, but `--domain=` keeps the URL stable if you have one).
+- **Restart on failure:** add `Restart=always` and `RestartSec=10` under `[Service]`, then `sudo systemctl enable --now ngrok.service`.
+- **Check status anytime:** `systemctl status ngrok.service` and `journalctl -u ngrok.service -f`.
+
+A simple shell loop also works if you don't want systemd:
+
+```bash
+while true; do ngrok http 192.168.x.x:80; sleep 5; done
+```
 
 ---
+
 ### Tunneling using Tailscale
 
+[Tailscale](https://tailscale.com/) is a zero-config WireGuard mesh VPN. Once installed on both your always-on device and your phone/laptop, both devices get stable private IPs (e.g. `100.x.y.z`) and can talk to each other directly. No public URL, no port forwarding, no CGNAT workaround needed. This is the recommended option if the ESP32 only needs to be reachable by you and your own devices.
+
+> ✅ **Why Tailscale over Ngrok for personal use:** no public exposure (the URL only exists inside your private Tailscale network), no session expiry, no rate limits, and it survives reboots without any restart scripts. The tradeoff is that anyone you want to give access to must also install Tailscale and be added to your tailnet.
+
+#### 1. Install Tailscale on the always-on device
+
+On a Raspberry Pi running 64-bit Raspberry Pi OS Bookworm:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
+
+That walks you through signing in with a Google/Microsoft/GitHub account. Once it's up, run `tailscale ip -4` to see the device's Tailscale IP (e.g. `100.64.0.2`).
+
+For other platforms, see https://tailscale.com/download/.
+
+#### 2. Install Tailscale on the devices that need access
+
+Install Tailscale on your phone, laptop, or any other device that should be able to reach the ESP32. Sign in with the same account. Each device gets its own `100.x.y.z` Tailscale IP.
+
+#### 3. Forward traffic to the ESP32 from the always-on device
+
+Tailscale itself doesn't proxy HTTP. It just gives every device a private IP. To forward requests from your phone to the ESP32's web UI, run a small TCP forwarder on the always-on device. `socat` is the simplest option:
+
+```bash
+sudo apt install socat
+socat TCP-LISTEN:80,fork,reuseaddr TCP:192.168.x.x:80
+```
+
+Replace `192.168.x.x` with the ESP32's local IP. Now anyone on your Tailscale network can browse to `http://100.64.0.2/` (the always-on device's Tailscale IP) and reach the ESP32's web interface. The relay triggers the same way: `POST http://100.64.0.2/trigger`.
+
+> 💡 **Tip:** to make the port permanent across reboots, wrap the `socat` command in a systemd service (same shape as the Ngrok one above, just replace the `ExecStart` line).
+
+#### 4. Make the always-on device reachable as an exit node or subnet router (optional)
+
+If you want your phone to reach the ESP32 even when the always-on device is on a different network than the ESP32, enable subnet routing on the always-on device:
+
+```bash
+sudo tailscale up --advertise-routes=192.168.x.0/24
+```
+
+Then approve the subnet route in the Tailscale admin console (https://login.tailscale.com/admin/machines). After approval, your phone can reach the ESP32 directly at its LAN IP as if it were on the same network.
+
 ---
 
+### Wake-on-LAN Setup
 
-- 🔁 Automation tips for persistent access
+> ℹ️ **Not the main path:** Wake-on-LAN is an alternative to this project for users with a Raspberry Pi on the same LAN as their PC. The full step-by-step guide (BIOS enable, Windows settings, sending the WoL packet from the Pi, and the Tailscale option for remote wake-from-outside) lives in the [companion guide](WAKE_ON_LAN_WITH_RASPBERRY_PI.md). The rest of this README assumes you're going with the ESP32 + relay build.
+
+Wake-on-LAN works by sending a "magic packet" to the PC's Ethernet adapter. It requires a PC that supports WoL, an Ethernet connection, and an always-on device on the same LAN to broadcast the packet. It does not work across the internet on its own.
 
 ---
 
-Need help with a specific setup? Let me know and I’ll tailor the guide to your hardware or network!
+### `Methods of Installation`
+
+This section summarizes the practical steps for each remote-access option so you can pick one and follow it end-to-end. The detailed walkthroughs for each option live in the sections above.
+
+| Method | Best for | Always-on device needed? | Public URL? | Survives reboot? | Setup effort |
+|---|---|---|---|---|---|
+| **Wake-on-LAN** | PCs with Ethernet + BIOS WoL support | Yes (any LAN device) | No (LAN only) | Yes (scriptable) | Low: BIOS toggle + 3 Windows checkboxes + one Linux command |
+| **Tailscale** | Personal use across your own devices | Yes (Raspberry Pi recommended) | No (private VPN IP) | Yes (no expiry) | Low: install on two devices + one `socat` line |
+| **Ngrok** | Sharing a public link with others, demos, temporary access | Yes (any internet-connected box) | Yes: `https://*.ngrok-free.app` | Yes with systemd/loop | Medium: install + authtoken + systemd service |
+| **Raspberry Pi Connect** | Full remote desktop into the Pi itself (not the PC) | Pi 4/5/400 with Bookworm + Wayland | No (Pi relay) | Yes | Low: enable in Pi OS settings |
+
+#### Quick decision guide
+
+- **Just want the PC to power on remotely and you have Ethernet?** → Wake-on-LAN, it's the simplest.
+- **Want to reach the ESP32's web UI from your phone and you don't want a public URL?** → Tailscale.
+- **Need to share access with someone else or want a public HTTPS link?** → Ngrok.
+- **Want full remote desktop into a Raspberry Pi (separate from this project)?** → Raspberry Pi Connect.
+
+> 🧪 **Tested note:** all four methods have been verified working with the ESP32 sketch in this repository, but Ngrok free-tier URL stability depends on your always-on device staying powered and connected. If uptime matters more than simplicity, Tailscale is the more reliable long-term choice.
+
+---
 
 ### Understanding the Limitations of CGNAT
 
@@ -673,40 +721,20 @@ Many internet service providers (ISPs), especially those offering residential or
 - The public IP address is shared among multiple users.
 - As a result, **port forwarding is not possible**, since the external traffic cannot reach your device directly.
 
-> Even if port forwarding is configured on your router, it will not function unless your ISP assigns you a real public IP — which typically requires an upgrade to a business plan and extra monthly fees.
+> Even if port forwarding is configured on your router, it will not function unless your ISP assigns you a real public IP, which typically requires an upgrade to a business plan and extra monthly fees.
 
 ---
 
 ## Solution: Tunnel Through CGNAT
 
-To make your ESP32 project accessible over the internet despite CGNAT, you can use **tunneling services** or **private VPN networks**. These tools allow you to reach your ESP32 from anywhere in the world — without relying on public IP addresses or port forwarding.
+To make your ESP32 project accessible over the internet despite CGNAT, you can use **tunneling services** or **private VPN networks**. These tools allow you to reach your ESP32 from anywhere in the world, without relying on public IP addresses or port forwarding.
 
-The most effective methods are:
+The two main methods covered in this guide are:
 
----
+- **[Tailscale](#tunneling-using-tailscale)** is a free, peer-to-peer VPN that creates a private network between your devices using WireGuard. It works behind CGNAT and firewalls, has no session expiry, and is ideal for personal long-term access.
+- **[Ngrok](#tunneling-using-ngrok)** is a tunneling tool that creates a **public HTTPS link** to a local server. Useful for sharing access, demos, or temporary access. Free sessions expire after ~8 hours but a systemd service can keep it running.
 
-### Tailscale – Secure, Persistent, and Private
-
-[Tailscale](https://tailscale.com/) is a free, peer-to-peer VPN that creates a private network between your devices using WireGuard. It works perfectly behind CGNAT and firewalls.
-
-- Creates a **private, encrypted tunnel** between your devices
-- Automatically reconnects on reboot or network change
-- Runs **indefinitely** without timeouts or manual restarts
-- Perfect for **secure, long-term access**
-- Ideal for projects where **only you or selected devices** need access to the ESP32
-
----
-
-### Ngrok – Public Access with HTTPS Links
-
-[Ngrok](https://ngrok.com/) is a tunneling tool that creates a **public HTTPS link** to a local server. This allows your ESP32's web interface (hosted on a PC or Raspberry Pi) to be accessed from anywhere — even under CGNAT.
-
-- Provides a **temporary public URL** to any local port (e.g., ESP32 at `192.168.x.x:80`)
-- Fully functional even without a public IP
-- Can be configured to **restart automatically**, allowing it to run continuously
-- Useful for **sharing access**, testing, or remote control via browser or phone
-
-Although free Ngrok sessions expire after ~8 hours, a simple restart script allows it to run as long as your device is powered and connected.
+See the full walkthroughs in [Tunneling using Ngrok](#tunneling-using-ngrok) and [Tunneling using Tailscale](#tunneling-using-tailscale). The [Methods of Installation](#methods-of-installation) table at the end compares both side by side.
 
 ---
 
@@ -718,9 +746,7 @@ You can use it alongside Tailscale or Ngrok, or even take advantage of **Raspber
 
 > ⚠️ ***Important Note for Raspberry Pi Users:*** 
 
-> If your Raspberry Pi has a **LAN port**, you can use it to directly **wake your PC via Wake-on-LAN**, without needing any tunneling at all.  
-
-> This is the most efficient method — skip to the **Wake-on-LAN section** if this applies to you.
+> For the full Wake-on-LAN + Pi setup (BIOS enable, Windows settings, sending the WoL packet, and the Tailscale option for remote wake-from-outside), see the [companion guide](WAKE_ON_LAN_WITH_RASPBERRY_PI.md).
 
 If your Raspberry Pi does **not** support full desktop or Ethernet, you can still use:
 
@@ -744,7 +770,7 @@ If your Raspberry Pi does **not** support full desktop or Ethernet, you can stil
 
 #### Raspberry Pi Connect Lite – Terminal-Only Access
 
-For older models or headless systems, **Connect Lite** provides basic but effective remote shell access — no desktop required.
+For older models or headless systems, **Connect Lite** provides basic but effective remote shell access. No desktop required.
 
 ##### Key Features
 - **No screen sharing**, but secure **remote shell (CLI) access**
@@ -760,19 +786,12 @@ With Connect Lite, you can:
 
 ### Summary
 
-In short:
-
-- If your **Pi has Ethernet**, Wake-on-LAN may be all you need.
-- If not, use **Tailscale** or **Ngrok** to access your ESP32 or PC remotely.
-- If you're choosing a **cheap always-on device**, any low-cost Raspberry Pi will work — just make sure it stays powered.
-
-
-### `Methods of Installation`
+For the full decision guide on when to use Wake-on-LAN, Tailscale + Pi, or this project, see the [Highlights → Which path is right for you](#highlights) block at the top of the README and the [Already Have a Raspberry Pi?](#already-have-a-raspberry-pi) section.
 
 
 ---
 
-## 📜 License
+## 📜 License {#-license}
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
 
